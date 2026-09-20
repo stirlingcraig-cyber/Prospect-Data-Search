@@ -1,0 +1,5 @@
+# This site is a single-page client-side tool — everything is safe to crawl.
+User-agent: *
+Allow: /
+
+Sitemap: https://REPLACE-WITH-YOUR-USERNAME.github.io/REPLACE-WITH-YOUR-REPO/sitemap.xml

@@ -1,0 +1,2169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Decision-Maker Ledger — Sustainability & Procurement OSINT</title>
+<meta name="description" content="A free, GDPR-aware OSINT working ledger for finding publicly accessible Sustainability/ESG and Procurement/Supply Chain decision-makers at UK companies — annual reports, leadership pages, LinkedIn, Companies House, and payment practice reports, all in one tracker.">
+<meta name="keywords" content="OSINT ledger, sustainability decision makers, procurement contacts, ESG outreach research, UK GDPR legitimate interest, Companies House officer search, payment practices reporting, B2B prospecting tool">
+<meta name="author" content="Craig Stirling">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://REPLACE-WITH-YOUR-USERNAME.github.io/REPLACE-WITH-YOUR-REPO/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%8B%3C/text%3E%3C/svg%3E">
+
+<!-- Open Graph / social + search preview cards -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Decision-Maker Ledger — Sustainability & Procurement OSINT">
+<meta property="og:description" content="A free, GDPR-aware OSINT working ledger for finding publicly accessible Sustainability/ESG and Procurement/Supply Chain decision-makers at UK companies.">
+<meta property="og:url" content="https://REPLACE-WITH-YOUR-USERNAME.github.io/REPLACE-WITH-YOUR-REPO/">
+<meta property="og:site_name" content="Decision-Maker Ledger">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Decision-Maker Ledger — Sustainability & Procurement OSINT">
+<meta name="twitter:description" content="A free, GDPR-aware OSINT working ledger for finding publicly accessible Sustainability/ESG and Procurement/Supply Chain decision-makers at UK companies.">
+
+<!-- Structured data so search engines understand this is a tool, not an article -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Decision-Maker Ledger",
+  "alternateName": "Sustainability & Procurement OSINT Ledger",
+  "description": "A free, GDPR-aware OSINT working ledger for finding publicly accessible Sustainability/ESG and Procurement/Supply Chain decision-makers at UK companies.",
+  "url": "https://REPLACE-WITH-YOUR-USERNAME.github.io/REPLACE-WITH-YOUR-REPO/",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any (runs in a web browser)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+  "author": { "@type": "Person", "name": "Craig Stirling" }
+}
+</script>
+<style>
+  :root{
+    --ink:#1B2420;
+    --ink-soft:#54594F;
+    --paper:#E7E4D8;
+    --paper-raised:#F1EEE3;
+    --rule:#C7C0A9;
+    --rule-strong:#A79F82;
+    --verified:#2F6B4F;
+    --verified-bg:#E1EAE1;
+    --restricted:#A85B1B;
+    --restricted-bg:#EFE1CE;
+    --stamp-red:#8C2F26;
+    --warn-bg:#F3E3C9;
+    --serif: Georgia, "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--serif);
+    font-size:16px;
+    line-height:1.5;
+    background-image:
+      repeating-linear-gradient(180deg, transparent, transparent 27px, rgba(84,89,79,0.05) 28px);
+  }
+  .wrap{max-width:1020px;margin:0 auto;padding:28px 20px 80px;}
+
+  a{ color:var(--verified); }
+
+  /* Header / case strip */
+  header.case{
+    border:1px solid var(--rule-strong);
+    border-radius:2px;
+    padding:20px 24px;
+    background:var(--paper-raised);
+    position:relative;
+    margin-bottom:16px;
+  }
+  header.case .file-no{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.04em;
+    color:var(--ink-soft);
+  }
+  header.case h1{
+    font-size:28px;
+    margin:6px 0 4px;
+    font-weight:600;
+    letter-spacing:.01em;
+  }
+  header.case p.sub{
+    margin:0;
+    color:var(--ink-soft);
+    font-size:14.5px;
+    max-width:64ch;
+  }
+  header.case .seal{
+    position:absolute;
+    top:18px; right:20px;
+    width:74px; height:74px;
+    border:2px solid var(--verified);
+    border-radius:50%;
+    color:var(--verified);
+    display:flex; align-items:center; justify-content:center;
+    text-align:center;
+    font-family:var(--mono);
+    font-size:9px;
+    line-height:1.25;
+    letter-spacing:.02em;
+    transform:rotate(-8deg);
+    opacity:.85;
+    padding:4px;
+  }
+  @media (max-width:640px){ header.case .seal{display:none;} }
+
+  /* Stats strip */
+  .stats{
+    display:flex; flex-wrap:wrap; gap:10px;
+    margin-bottom:16px;
+  }
+  .stat{
+    flex:1 1 130px;
+    border:1px solid var(--rule-strong);
+    background:var(--paper-raised);
+    border-radius:3px;
+    padding:9px 12px;
+  }
+  .stat .num{ font-size:20px; font-weight:600; line-height:1.1; }
+  .stat .label{ font-family:var(--mono); font-size:10.5px; color:var(--ink-soft); letter-spacing:.03em; margin-top:2px; }
+
+  /* Tabs styled as folder tabs */
+  nav.tabs{
+    display:flex;
+    gap:4px;
+    margin-bottom:0;
+    padding-left:6px;
+  }
+  nav.tabs button{
+    font-family:var(--serif);
+    font-size:14.5px;
+    background:var(--rule);
+    color:var(--ink-soft);
+    border:1px solid var(--rule-strong);
+    border-bottom:none;
+    padding:9px 18px 8px;
+    border-radius:6px 6px 0 0;
+    cursor:pointer;
+    position:relative;
+    top:1px;
+  }
+  nav.tabs button.active{
+    background:var(--paper-raised);
+    color:var(--ink);
+    font-weight:600;
+  }
+  nav.tabs button:hover:not(.active){ background:#D6D0BC; }
+  nav.tabs button:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, [tabindex]:focus-visible{
+    outline:2px solid var(--verified);
+    outline-offset:2px;
+  }
+
+  main.panel{
+    border:1px solid var(--rule-strong);
+    background:var(--paper-raised);
+    border-radius:0 4px 4px 4px;
+    padding:26px 24px 30px;
+  }
+
+  h2.panel-title{ margin:0 0 4px; font-size:19px; }
+  p.panel-note{ margin:0 0 18px; color:var(--ink-soft); font-size:14px; max-width:68ch; }
+
+  /* Form controls */
+  label{ display:block; font-size:12.5px; color:var(--ink-soft); margin-bottom:4px; font-family:var(--mono); }
+  label .req{ color:var(--stamp-red); }
+  input[type=text], input[type=date], input[type=search], select, textarea{
+    width:100%;
+    font-family:var(--serif);
+    font-size:14.5px;
+    padding:8px 9px;
+    border:1px solid var(--rule-strong);
+    background:#FBFAF5;
+    color:var(--ink);
+    border-radius:3px;
+  }
+  input.invalid{ border-color:var(--stamp-red); background:#FBEDEA; }
+  .field-error{ font-size:11.5px; color:var(--stamp-red); margin-top:3px; font-family:var(--mono); }
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .grid3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+  @media (max-width:640px){ .grid2,.grid3{grid-template-columns:1fr;} }
+  .field{ margin-bottom:12px; }
+
+  .search-row{ display:flex; gap:10px; align-items:center; margin-bottom:14px; }
+  .search-row input{ flex:1; }
+  .search-row .count{ font-family:var(--mono); font-size:12px; color:var(--ink-soft); white-space:nowrap; }
+
+  button.action{
+    font-family:var(--serif);
+    background:var(--ink);
+    color:var(--paper-raised);
+    border:none;
+    padding:9px 16px;
+    border-radius:3px;
+    cursor:pointer;
+    font-size:14px;
+  }
+  button.action:hover{ background:#2E3A32; }
+  button.action:disabled{ opacity:.45; cursor:not-allowed; }
+  button.ghost{
+    background:transparent;
+    color:var(--ink-soft);
+    border:1px solid var(--rule-strong);
+  }
+  button.ghost:hover{ border-color:var(--ink); color:var(--ink); }
+  button.small{ padding:5px 10px; font-size:12.5px; border-radius:3px; }
+  button.danger{ color:var(--stamp-red); border-color:var(--stamp-red); background:transparent; border:1px solid var(--stamp-red); }
+  button.danger:hover{ background:var(--stamp-red); color:#fff; }
+  button.icon{ padding:5px 9px; line-height:1; }
+  .btn-row{ display:flex; gap:6px; flex-wrap:wrap; }
+
+  /* Company cards */
+  .company-card{
+    border:1px solid var(--rule-strong);
+    border-radius:3px;
+    margin-bottom:16px;
+    background:#FBFAF5;
+  }
+  .company-card.is-complete{ border-left:4px solid var(--verified); }
+  .company-head{
+    display:flex; justify-content:space-between; align-items:flex-start;
+    padding:14px 16px;
+    cursor:pointer;
+    gap:10px;
+  }
+  .company-head h3{ margin:0; font-size:16.5px; display:inline; }
+  .company-head .meta{ font-size:12.5px; color:var(--ink-soft); font-family:var(--mono); margin-top:3px; }
+  .company-head .chev{ font-family:var(--mono); color:var(--ink-soft); font-size:13px; white-space:nowrap; padding-top:2px;}
+  .company-body{ border-top:1px solid var(--rule); padding:16px; display:none; }
+  .company-body.open{ display:block; }
+
+  .badge{
+    display:inline-block; font-family:var(--mono); font-size:10px; letter-spacing:.02em;
+    padding:2px 7px; border-radius:20px; border:1px solid; margin-left:8px; vertical-align:middle;
+  }
+  .badge.complete{ color:var(--verified); border-color:var(--verified); background:var(--verified-bg); }
+  .badge.pending{ color:var(--ink-soft); border-color:var(--rule-strong); background:var(--paper); }
+  .badge.dup{ color:var(--restricted); border-color:var(--restricted); background:var(--restricted-bg); }
+
+  .track-label{
+    font-family:var(--mono); font-size:11.5px; letter-spacing:.03em; color:var(--ink-soft);
+    display:flex; align-items:center; gap:8px; margin:18px 0 8px;
+  }
+  .track-label::after{ content:""; flex:1; border-bottom:1px dashed var(--rule-strong); }
+
+  .step-guide{
+    background:var(--paper);
+    border:1px dashed var(--rule-strong);
+    border-radius:3px;
+    padding:10px 12px;
+    font-size:13px;
+    color:var(--ink-soft);
+    margin-bottom:12px;
+  }
+  .step-guide a{ color:var(--verified); text-decoration:none; border-bottom:1px solid var(--verified); margin-right:10px; }
+  .step-guide code{ font-family:var(--mono); background:var(--paper-raised); padding:1px 4px; border-radius:2px; }
+
+  .step-note{
+    background:var(--paper);
+    border:1px solid var(--rule-strong);
+    border-radius:3px;
+    padding:9px 12px;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    font-style:italic;
+    margin-bottom:12px;
+  }
+
+  .file-btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    font-family:var(--serif); font-size:14px; padding:9px 16px; border-radius:3px;
+    border:1px solid var(--rule-strong); background:transparent; color:var(--ink-soft); cursor:pointer;
+  }
+  .file-btn:hover{ border-color:var(--ink); color:var(--ink); }
+  .file-btn:has(input:focus-visible){ outline:2px solid var(--verified); outline-offset:2px; }
+  .visually-hidden{
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+  }
+
+  /* Lead entry rows */
+  .lead-row{
+    display:grid;
+    grid-template-columns: 1.2fr 1.2fr 1.4fr .9fr .7fr auto;
+    gap:8px;
+    align-items:end;
+    padding:10px;
+    border:1px solid var(--rule);
+    border-radius:3px;
+    margin-bottom:8px;
+    background:#fff;
+  }
+  @media (max-width:900px){ .lead-row{grid-template-columns:1fr 1fr;} }
+
+  .li-row{
+    display:grid;
+    grid-template-columns: auto 1.1fr 1.1fr 1.3fr .9fr .8fr;
+    gap:8px;
+    align-items:end;
+    padding:10px;
+    border:1px solid var(--rule);
+    border-radius:3px;
+    margin-bottom:8px;
+    background:#fff;
+  }
+  .li-row input[type=checkbox]{ width:18px; height:18px; margin:0 0 8px; }
+  @media (max-width:900px){ .li-row{ grid-template-columns:auto 1fr 1fr; } }
+  .li-hint{ font-size:10.5px; color:var(--restricted); margin-top:2px; }
+
+  .status-pill{
+    display:inline-flex; align-items:center; gap:5px;
+    font-family:var(--mono); font-size:11px; padding:3px 8px; border-radius:20px;
+    border:1px solid;
+  }
+  .status-pill.verified{ color:var(--verified); border-color:var(--verified); background:var(--verified-bg); }
+  .status-pill.restricted{ color:var(--restricted); border-color:var(--restricted); background:var(--restricted-bg); }
+
+  .empty{ color:var(--ink-soft); font-size:13.5px; font-style:italic; padding:6px 2px; }
+
+  /* Status / toast message */
+  .status-msg{
+    font-size:13px; font-family:var(--mono); padding:8px 12px; border-radius:3px;
+    margin-bottom:14px; border:1px solid transparent; display:none;
+  }
+  .status-msg.show{ display:block; }
+  .status-msg.ok{ background:var(--verified-bg); border-color:var(--verified); color:var(--verified); }
+  .status-msg.err{ background:#FBEDEA; border-color:var(--stamp-red); color:var(--stamp-red); }
+
+  /* Export */
+  pre#exportOut{
+    white-space:pre-wrap;
+    font-family:var(--mono);
+    font-size:12.5px;
+    background:#FBFAF5;
+    border:1px solid var(--rule-strong);
+    border-radius:3px;
+    padding:16px;
+    max-height:520px;
+    overflow:auto;
+    line-height:1.55;
+  }
+  .toolbar{ display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap; }
+
+  .footnote{ margin-top:26px; font-size:12px; color:var(--ink-soft); border-top:1px solid var(--rule); padding-top:12px; }
+  .footnote ul{ margin:6px 0 0; padding-left:18px; }
+  .danger-zone{ margin-top:22px; padding-top:16px; border-top:1px dashed var(--stamp-red); }
+  .danger-zone p{ font-size:12.5px; color:var(--ink-soft); margin:0 0 8px; }
+
+  textarea#jsonIO{ font-family:var(--mono); font-size:12px; min-height:110px; }
+
+  /* Confirmation modal (replaces native confirm(), which can be blocked when this page
+     runs inside a sandboxed/hosted viewer) */
+  .confirm-overlay{
+    position:fixed; inset:0; background:rgba(27,36,32,0.45);
+    display:none; align-items:center; justify-content:center; z-index:1000; padding:20px;
+  }
+  .confirm-overlay.show{ display:flex; }
+  .confirm-box{
+    background:var(--paper-raised); border:1px solid var(--rule-strong); border-radius:4px;
+    padding:18px 20px; max-width:420px; width:100%; box-shadow:0 8px 24px rgba(0,0,0,.25);
+    font-family:var(--serif);
+  }
+  .confirm-box p{ margin:0 0 14px; font-size:14.5px; color:var(--ink); }
+
+  @media print{
+    nav.tabs, .toolbar, .danger-zone, .step-guide, header .seal, .confirm-overlay{ display:none !important; }
+    #tab-setup, #tab-research{ display:none !important; }
+    #tab-export{ display:block !important; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="case">
+    <div class="file-no">FILE REF: OSINT/ESG-PROC/UK · OPENED <span id="openDate"></span></div>
+    <h1>Decision-Maker Ledger</h1>
+    <p class="sub">An OSINT-led working ledger for identifying publicly accessible Sustainability / ESG and Procurement / Supply Chain decision-makers. Use it to capture leads from annual reports, leadership pages, and LinkedIn, with each entry tagged by its access basis.</p>
+    <div class="seal">PUBLIC<br>SOURCES<br>ONLY</div>
+  </header>
+
+  <div class="track-label" style="margin:0 0 8px;">Dashboard</div>
+  <div class="stats" id="statsBar" aria-hidden="false"></div>
+
+  <div id="statusMsg" class="status-msg" role="status" aria-live="polite"></div>
+
+  <nav class="tabs" role="tablist" aria-label="Ledger sections">
+    <button class="tab-btn active" role="tab" id="tabbtn-setup" aria-selected="true" aria-controls="tab-setup" data-tab="setup">1 · Targets</button>
+    <button class="tab-btn" role="tab" id="tabbtn-research" aria-selected="false" aria-controls="tab-research" data-tab="research">2 · Research</button>
+    <button class="tab-btn" role="tab" id="tabbtn-export" aria-selected="false" aria-controls="tab-export" data-tab="export">3 · Export</button>
+  </nav>
+
+  <main class="panel">
+
+    <!-- TAB 1: SETUP -->
+    <section id="tab-setup" role="tabpanel" aria-labelledby="tabbtn-setup">
+      <h2 class="panel-title">Target companies</h2>
+      <p class="panel-note">Add each organisation in scope. Sector and water-relevance are optional but help you prioritise the research queue.</p>
+
+      <div class="grid3">
+        <div class="field">
+          <label for="cName">Company name <span class="req">*</span></label>
+          <input type="text" id="cName" placeholder="e.g. Thames Water" maxlength="200">
+          <div class="field-error" id="cNameError" style="display:none;">Enter a company name.</div>
+        </div>
+        <div class="field">
+          <label for="cSector">Sector</label>
+          <input type="text" id="cSector" placeholder="e.g. Water Utility" maxlength="200">
+        </div>
+        <div class="field">
+          <label for="cWater">Water relevance (optional)</label>
+          <input type="text" id="cWater" placeholder="Why water is material to them" maxlength="300">
+        </div>
+      </div>
+      <button class="action" id="addCompanyBtn">Add company</button>
+
+      <div class="track-label" style="margin-top:26px;">Bulk import</div>
+      <p class="panel-note" style="margin-bottom:12px;">
+        Upload or paste CSV/TSV data — three formats are recognised automatically:
+      </p>
+      <ul class="panel-note" style="margin:-6px 0 12px; padding-left:18px; max-width:68ch;">
+        <li><strong>Company list:</strong> columns <code>name</code> (required), <code>sector</code>, <code>water</code>.</li>
+        <li><strong>Full ledger export:</strong> columns <code>Company</code> (required), <code>Sector</code>, <code>Category</code>, <code>Name</code>, <code>Title</code>, <code>Source</code>, <code>Accessed</code>, <code>Access status</code> — this is exactly what the Export tab's "Download .csv" produces, so you can edit it elsewhere (or export from another session) and feed it straight back in.</li>
+        <li><strong>Company directory:</strong> a target-list research sheet with columns like <code>Company Name</code> (required), <code>Trading Name</code>, <code>Sector</code>, <code>Primary SIC Code</code>, <code>Region</code>, <code>Headquarters Location</code>, <code>Turnover (£m)</code>, <code>Employees (UK)</code>, <code>Companies House Number</code>, <code>Website URL</code>, <code>Source(s)</code>. Tab-separated (.tsv) files are handled automatically as well as comma-separated.</li>
+      </ul>
+      <p class="panel-note" style="margin-bottom:12px;">Column order doesn't matter and unrecognised columns are ignored. Companies already in the queue are matched by name rather than duplicated; leads and not-accessible entries already recorded are skipped rather than repeated. Rows with more columns than the header (usually an unescaped comma or tab inside a name) are flagged rather than imported, so they can't silently shift data into the wrong fields.</p>
+
+      <div class="btn-row" style="align-items:center; margin-bottom:10px;">
+        <label class="file-btn" for="csvFile">Choose File</label>
+        <input type="file" id="csvFile" accept=".csv,.tsv,text/csv,text/tab-separated-values" class="visually-hidden">
+        <span class="count" id="csvFileName">no file selected</span>
+        <button class="action ghost" id="importCsvBtn">Import file</button>
+      </div>
+
+      <div class="track-label" style="margin:16px 0 8px;">or paste CSV/TSV data</div>
+      <div class="field">
+        <label for="csvPaste">Paste CSV or TSV text (including its header row)</label>
+        <textarea id="csvPaste" rows="5" placeholder="name,sector,water&#10;Thames Water,Water Utility,Direct operator" aria-label="Paste CSV data"></textarea>
+      </div>
+      <button class="action ghost" id="importPasteBtn">Import pasted data</button>
+
+      <div class="search-row" style="margin-top:22px;">
+        <input type="search" id="setupSearch" placeholder="Filter queue by name or sector…" aria-label="Filter company queue">
+        <span class="count" id="setupCount"></span>
+      </div>
+
+      <div class="track-label">Queue</div>
+      <div id="companyList"></div>
+    </section>
+
+    <!-- TAB 2: RESEARCH -->
+    <section id="tab-research" role="tabpanel" aria-labelledby="tabbtn-research" style="display:none;">
+      <h2 class="panel-title">Research workspace</h2>
+      <p class="panel-note">Work company by company. Each card follows the same three-step workflow: reports, leadership pages, then LinkedIn — record what's public, and mark the rest as not accessible.</p>
+
+      <div class="search-row">
+        <input type="search" id="researchSearch" placeholder="Filter by name or sector…" aria-label="Filter research workspace">
+        <span class="count" id="researchCount"></span>
+      </div>
+
+      <div class="btn-row" style="margin-bottom:14px;">
+        <button class="action ghost small" id="fetchAllLinksBtn">Open Step 1–6 links for all visible companies</button>
+      </div>
+      <div id="bulkBlockedContainer"></div>
+
+      <div id="researchList"></div>
+    </section>
+
+    <!-- TAB 3: EXPORT -->
+    <section id="tab-export" role="tabpanel" aria-labelledby="tabbtn-export" style="display:none;">
+      <h2 class="panel-title">Formatted output</h2>
+      <p class="panel-note">The ledger generates a standard per-company record block, ready to paste into your tracker or CRM once you have added at least one company and its decision-maker data.</p>
+      <div class="toolbar">
+        <button class="action" id="genExportBtn">Generate</button>
+        <button class="action ghost small" id="copyExportBtn">Copy to clipboard</button>
+        <button class="action ghost small" id="downloadExportBtn">Download .txt</button>
+        <button class="action ghost small" id="downloadCsvBtn">Download .csv</button>
+        <button class="action ghost small" id="printExportBtn">Print</button>
+      </div>
+      <pre id="exportOut">No records have been generated yet. Add a company and click &quot;Generate&quot; to create your first structured record.</pre>
+
+      <div class="footnote">
+        <h3 style="margin:0 0 6px; font-size:14px; color:var(--ink);">Data persistence</h3>
+        <p style="margin:0 0 8px;">This page stores your ledger in memory only. It will clear on refresh or when you close the tab. Before you leave, copy the JSON below and store it securely in your own system. Next time, paste that JSON back in to reload your ledger.</p>
+        <div style="margin-top:8px;">
+          <textarea id="jsonIO" placeholder="Ledger JSON appears here — click 'Export JSON', or paste previously saved JSON here and click 'Load JSON'." aria-label="Ledger JSON"></textarea>
+          <div class="toolbar" style="margin-top:8px;">
+            <button class="action ghost small" id="exportJsonBtn">Export JSON</button>
+            <button class="action ghost small" id="loadJsonBtn">Load JSON</button>
+          </div>
+        </div>
+
+        <div class="danger-zone">
+          <p><strong>Clear all data.</strong> Removes every company and lead from this session. This cannot be undone — export your JSON first if you might need it again.</p>
+          <button class="action danger small" id="clearAllBtn">Clear all data</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="footnote">
+      <h3 style="margin:0 0 6px; font-size:14px; color:var(--ink);">Usage reminders</h3>
+      <ul>
+        <li>Record only information that is published without login, paywall, or bypassing access controls.</li>
+        <li>Run LinkedIn lookups from your own logged-in account, in line with LinkedIn's terms of use. This tool does not query LinkedIn on your behalf.</li>
+        <li>Suggested lawful basis under UK GDPR: Legitimate Interest (Art. 6(1)(f)). You must confirm that this basis fits your specific use case, disclose it on first contact, honour opt-outs, and define your own retention period.</li>
+      </ul>
+      <p style="margin:10px 0 0; font-style:italic;">This ledger provides structure and reminders, but does not enforce compliance. You remain responsible for lawful, proportionate, and transparent use of the data.</p>
+    </div>
+
+  </main>
+</div>
+
+<div class="confirm-overlay" id="confirmOverlay">
+  <div class="confirm-box" role="alertdialog" aria-modal="true" aria-labelledby="confirmMsg">
+    <p id="confirmMsg"></p>
+    <div class="btn-row" style="justify-content:flex-end;">
+      <button class="action ghost small" id="confirmCancelBtn">Cancel</button>
+      <button class="action danger small" id="confirmOkBtn">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  const STATUS = { VERIFIED: 'verified', RESTRICTED: 'restricted' };
+  const MAX_NAME_LEN = 200;
+
+  /** In-memory state (no browser storage — see Export JSON panel for persistence) */
+  let companies = [];
+  let idCounter = 1;
+  let setupSearch = '';
+  let researchSearch = '';
+
+  document.getElementById('openDate').textContent = new Date().toLocaleDateString('en-GB', { day:'2-digit', month:'long', year:'numeric' });
+
+  // ---------- In-page confirm modal (replaces window.confirm, which some hosted/sandboxed
+  // viewers block or suppress silently) ----------
+  function showConfirm(message){
+    return new Promise(resolve=>{
+      const overlay = document.getElementById('confirmOverlay');
+      const okBtn = document.getElementById('confirmOkBtn');
+      const cancelBtn = document.getElementById('confirmCancelBtn');
+      document.getElementById('confirmMsg').textContent = message;
+      overlay.classList.add('show');
+      const prevFocus = document.activeElement;
+      function cleanup(result){
+        overlay.classList.remove('show');
+        okBtn.removeEventListener('click', onOk);
+        cancelBtn.removeEventListener('click', onCancel);
+        overlay.removeEventListener('click', onOverlayClick);
+        document.removeEventListener('keydown', onKey);
+        if(prevFocus && typeof prevFocus.focus === 'function') prevFocus.focus();
+        resolve(result);
+      }
+      function onOk(){ cleanup(true); }
+      function onCancel(){ cleanup(false); }
+      function onOverlayClick(e){ if(e.target === overlay) cleanup(false); }
+      function onKey(e){
+        if(e.key === 'Escape') cleanup(false);
+        else if(e.key === 'Enter') cleanup(true);
+      }
+      okBtn.addEventListener('click', onOk);
+      cancelBtn.addEventListener('click', onCancel);
+      overlay.addEventListener('click', onOverlayClick);
+      document.addEventListener('keydown', onKey);
+      okBtn.focus();
+    });
+  }
+
+  // ---------- Optional hosted-viewer downloads capability, with a plain-browser fallback ----------
+  let downloadsCapPromise = null;
+  function getDownloadsCap(){
+    if(!downloadsCapPromise){
+      downloadsCapPromise = (async ()=>{
+        try{
+          if(window.claude && typeof window.claude.use === 'function'){
+            return await window.claude.use('downloads');
+          }
+        }catch(e){ /* no viewer capability available */ }
+        return null;
+      })();
+    }
+    return downloadsCapPromise;
+  }
+  /** Saves a text file, preferring the hosted viewer's downloads capability (if granted)
+   *  and falling back to a classic Blob/anchor download in a plain browser tab.
+   *  Returns { ok: boolean, declined?: boolean }. */
+  async function saveFile(filename, mime, content){
+    let cap = null;
+    try{ cap = await getDownloadsCap(); }catch(e){ cap = null; }
+    if(cap){
+      try{
+        const blob = new Blob([content], {type:mime});
+        await cap.save({ filename, data: blob });
+        return { ok:true };
+      }catch(err){
+        const code = err && err.code;
+        if(code === 'declined'){ return { ok:false, declined:true }; }
+        // Any other capability error: fall through and try the plain-browser path below.
+      }
+    }
+    return { ok: triggerDownload(filename, mime, content) };
+  }
+
+  // ---------- Helpers ----------
+  function escapeHtml(s){
+    return String(s==null?'':s).replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  }
+  function escapeAttr(s){ return escapeHtml(s); }
+  function isSafeUrl(u){
+    if(!u) return false;
+    try{
+      const url = new URL(u.trim());
+      return url.protocol === 'http:' || url.protocol === 'https:';
+    }catch(e){ return false; }
+  }
+  /** Accepts URLs missing a scheme (e.g. "www.example.com") and returns a safe https(s) href, or '' if unusable. */
+  function toSafeHref(u){
+    u = String(u||'').trim();
+    if(!u) return '';
+    const withScheme = /^https?:\/\//i.test(u) ? u : 'https://' + u;
+    return isSafeUrl(withScheme) ? withScheme : '';
+  }
+  /** Loose check for a UK Companies House registration number (e.g. 01470151, NI017452, SC123456). */
+  function isLikelyCHNumber(s){
+    return /^[A-Za-z0-9]{5,10}$/.test(String(s||'').trim());
+  }
+
+  /** The Step 1–6 external search/reference links for a company — single source of truth for
+   *  both the step-by-step guidance in each card and the "Open Step 1–6 links" fetch action. */
+  function buildResearchLinks(c){
+    const q = encodeURIComponent(c.name);
+    const websiteHref = toSafeHref(c.website);
+    const hasCH = isLikelyCHNumber(c.chNumber);
+    const links = [];
+    if(websiteHref) links.push({ step:1, label:'Open company site', url:websiteHref });
+    links.push({ step:1, label:'Annual report search', url:`https://www.google.com/search?q=${q}+annual+report` });
+    links.push({ step:1, label:'Sustainability report search', url:`https://www.google.com/search?q=${q}+sustainability+report` });
+    links.push({ step:2, label:'Search leadership', url:`https://www.google.com/search?q=${q}+leadership+team` });
+    links.push({ step:3, label:'Sustainability roles', url:`https://www.linkedin.com/search/results/people/?keywords=${q}%20sustainability` });
+    links.push({ step:3, label:'Procurement roles', url:`https://www.linkedin.com/search/results/people/?keywords=${q}%20procurement` });
+    links.push({
+      step:4,
+      label: hasCH ? `Open officers list (CH# ${c.chNumber})` : 'Search Companies House',
+      url: hasCH
+        ? `https://find-and-update.company-information.service.gov.uk/company/${encodeURIComponent(c.chNumber.trim())}/officers`
+        : `https://find-and-update.company-information.service.gov.uk/search?q=${q}`
+    });
+    links.push({
+      step:5,
+      label: hasCH ? `Open payment practice reports (CH# ${c.chNumber})` : 'Check payment practices',
+      url: hasCH
+        ? `https://check-payment-practices.service.gov.uk/company/${encodeURIComponent(c.chNumber.trim())}/reports`
+        : `https://check-payment-practices.service.gov.uk/search/`
+    });
+    links.push({ step:6, label:'Search news', url:`https://www.google.com/search?q=${q}+appointment+announcement&tbm=nws` });
+    links.push({ step:6, label:'Search company newsroom', url:`https://www.google.com/search?q=${q}+newsroom+OR+%22press+release%22` });
+    return links;
+  }
+  function stepLinksHtml(links, step){
+    return links.filter(l => l.step === step)
+      .map(l => `<a href="${escapeAttr(l.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(l.label)} ↗</a>`)
+      .join('\n          ');
+  }
+  function formatDateTime(iso){
+    if(!iso) return '';
+    const d = new Date(iso);
+    if(isNaN(d.getTime())) return iso;
+    return d.toLocaleString('en-GB', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
+  }
+
+  /**
+   * Opens each link in a new tab and reports what actually happened — browsers frequently
+   * block window.open() calls (popup blockers, sandboxed contexts, disabled JS in the target,
+   * etc.), and a call can also throw rather than return null in some restricted embeds, so
+   * every call is individually guarded rather than assumed to succeed.
+   */
+  function openLinksWithDetection(links){
+    let opened = 0;
+    const blocked = [];
+    links.forEach(l=>{
+      let win = null;
+      try{ win = window.open(l.url, '_blank'); }catch(e){ win = null; }
+      if(win){
+        try{ win.opener = null; }catch(e){ /* best-effort hardening only */ }
+        opened++;
+      } else {
+        blocked.push(l);
+      }
+    });
+    return { opened, blocked, total: links.length };
+  }
+  function blockedLinksHtml(c){
+    const blocked = c._blockedLinks;
+    if(!blocked || blocked.length === 0) return '';
+    return `
+      <div class="step-note">
+        Your browser blocked ${blocked.length} link${blocked.length===1?'':'s'} from opening automatically — click each below, or allow pop-ups for this page and try again.
+        <div class="btn-row" style="margin-top:8px;">
+          ${blocked.map(l => `<a href="${escapeAttr(l.url)}" target="_blank" rel="noopener noreferrer" class="action ghost small" style="text-decoration:none; display:inline-block;">${escapeHtml(l.label)} ↗</a>`).join('')}
+        </div>
+        <button class="action ghost small" data-dismiss-blocked="${c.id}" style="margin-top:8px;">Dismiss</button>
+      </div>
+    `;
+  }
+  function csvField(v){
+    const s = String(v==null?'':v);
+    if(/[",\n]/.test(s)) return '"' + s.replace(/"/g,'""') + '"';
+    return s;
+  }
+  function announce(msg, isError){
+    const el = document.getElementById('statusMsg');
+    el.textContent = msg;
+    el.className = 'status-msg show ' + (isError ? 'err' : 'ok');
+    clearTimeout(announce._t);
+    announce._t = setTimeout(()=>{ el.classList.remove('show'); }, 4500);
+  }
+  function normalizeLead(raw){
+    raw = raw || {};
+    return {
+      name: String(raw.name||'').slice(0,200).trim(),
+      title: String(raw.title||'').slice(0,200).trim(),
+      source: String(raw.source||'').slice(0,500).trim(),
+      date: String(raw.date||'').slice(0,10).trim(),
+      status: (raw.status === STATUS.RESTRICTED) ? STATUS.RESTRICTED : STATUS.VERIFIED,
+      editing: false
+    };
+  }
+  function normalizeCompany(raw){
+    raw = raw || {};
+    const leadArr = a => Array.isArray(a) ? a.map(normalizeLead).filter(l=>l.name || l.title) : [];
+    const naArr = a => Array.isArray(a) ? a.map(x=>String(x||'').slice(0,300).trim()).filter(Boolean) : [];
+    const str = (v, len) => String(v==null?'':v).slice(0,len).trim();
+    return {
+      id: (typeof raw.id === 'number' && raw.id > 0) ? raw.id : idCounter++,
+      name: str(raw.name, MAX_NAME_LEN),
+      sector: str(raw.sector, 200),
+      water: str(raw.water, 300),
+      status: raw.status === 'complete' ? 'complete' : 'pending',
+      sustainabilityLeads: leadArr(raw.sustainabilityLeads),
+      procurementLeads: leadArr(raw.procurementLeads),
+      notAccessible: naArr(raw.notAccessible),
+      open: !!raw.open,
+      // Optional profile fields — populated when importing a company-directory CSV
+      tradingName: str(raw.tradingName, 200),
+      sicCode: str(raw.sicCode, 50),
+      region: str(raw.region, 100),
+      hq: str(raw.hq, 150),
+      turnover: str(raw.turnover, 50),
+      employees: str(raw.employees, 50),
+      chNumber: str(raw.chNumber, 20),
+      website: str(raw.website, 300),
+      sources: str(raw.sources, 300),
+      // Set when "Open Step 1–6 links" is used — an audit trail of when searches were run, not what they found
+      lastFetched: str(raw.lastFetched, 40)
+    };
+  }
+  function findCompany(id){ return companies.find(c => String(c.id) === String(id)); }
+  function matchesQuery(c, q){
+    if(!q) return true;
+    q = q.toLowerCase();
+    return (c.name||'').toLowerCase().includes(q)
+      || (c.sector||'').toLowerCase().includes(q)
+      || (c.tradingName||'').toLowerCase().includes(q)
+      || (c.region||'').toLowerCase().includes(q)
+      || (c.hq||'').toLowerCase().includes(q);
+  }
+  function duplicateNameIds(){
+    const counts = {};
+    companies.forEach(c=>{
+      const k = (c.name||'').trim().toLowerCase();
+      if(!k) return;
+      counts[k] = (counts[k]||0) + 1;
+    });
+    const dupKeys = new Set(Object.keys(counts).filter(k=>counts[k]>1));
+    return new Set(companies.filter(c=>dupKeys.has((c.name||'').trim().toLowerCase())).map(c=>c.id));
+  }
+
+  function updateStats(){
+    let totalLeads=0, verifiedLeads=0, restrictedLeads=0, notAccessible=0, complete=0;
+    companies.forEach(c=>{
+      const leads = c.sustainabilityLeads.concat(c.procurementLeads);
+      totalLeads += leads.length;
+      verifiedLeads += leads.filter(l=>l.status===STATUS.VERIFIED).length;
+      restrictedLeads += leads.filter(l=>l.status===STATUS.RESTRICTED).length;
+      notAccessible += c.notAccessible.length;
+      if(c.status==='complete') complete++;
+    });
+    const stats = [
+      ['companies', companies.length, 'Companies'],
+      ['complete', complete, 'Marked complete'],
+      ['leads', totalLeads, 'Leads recorded'],
+      ['verified', verifiedLeads, 'Publicly accessible'],
+      ['restricted', restrictedLeads, 'Restricted / flagged'],
+      ['na', notAccessible, 'Not accessible']
+    ];
+    document.getElementById('statsBar').innerHTML = stats.map(s=>`
+      <div class="stat"><div class="num">${s[1]}</div><div class="label">${s[2]}</div></div>
+    `).join('');
+  }
+
+  function renderAll(){
+    renderCompanyList();
+    renderResearch();
+    updateStats();
+  }
+
+  // ---------- Tabs ----------
+  const tabButtons = document.querySelectorAll('.tab-btn');
+  tabButtons.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      tabButtons.forEach(b=>{ b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+      btn.classList.add('active'); btn.setAttribute('aria-selected','true');
+      ['setup','research','export'].forEach(t=>{
+        document.getElementById('tab-'+t).style.display = (t===btn.dataset.tab) ? 'block' : 'none';
+      });
+      if(btn.dataset.tab === 'research') renderResearch();
+    });
+  });
+
+  // ---------- Add company ----------
+  function validateCompanyName(){
+    const name = document.getElementById('cName').value.trim();
+    const input = document.getElementById('cName');
+    const err = document.getElementById('cNameError');
+    if(!name){
+      input.classList.add('invalid');
+      err.style.display = 'block';
+      input.focus();
+      return null;
+    }
+    input.classList.remove('invalid');
+    err.style.display = 'none';
+    return name;
+  }
+
+  function addCompany(){
+    const name = validateCompanyName();
+    if(!name) return;
+    const sector = document.getElementById('cSector').value.trim();
+    const water = document.getElementById('cWater').value.trim();
+    companies.push(normalizeCompany({ name, sector, water, open:true }));
+    document.getElementById('cName').value='';
+    document.getElementById('cSector').value='';
+    document.getElementById('cWater').value='';
+    document.getElementById('cName').focus();
+    renderAll();
+    announce(`Added ${name} to the queue.`);
+  }
+  document.getElementById('addCompanyBtn').addEventListener('click', addCompany);
+  ['cName','cSector','cWater'].forEach(id=>{
+    document.getElementById(id).addEventListener('keydown', e=>{
+      if(e.key === 'Enter'){ e.preventDefault(); addCompany(); }
+    });
+  });
+  document.getElementById('cName').addEventListener('input', ()=>{
+    document.getElementById('cName').classList.remove('invalid');
+    document.getElementById('cNameError').style.display = 'none';
+  });
+
+  // ---------- Bulk CSV import (file upload + paste) ----------
+  const MAX_CSV_BYTES = 5 * 1024 * 1024; // 5MB guard
+  const MAX_PASTE_CHARS = 2 * 1024 * 1024; // ~2M chars guard for pasted text
+
+  /** Looks at the header line only, to decide whether the data is comma- or tab-separated. */
+  function detectDelimiter(text){
+    const firstLine = text.split(/\r\n|\r|\n/, 1)[0] || '';
+    const tabCount = (firstLine.match(/\t/g) || []).length;
+    const commaCount = (firstLine.match(/,/g) || []).length;
+    return tabCount > commaCount ? '\t' : ',';
+  }
+
+  function parseCSV(str, delimiter){
+    delimiter = delimiter || ',';
+    const rows = [];
+    let row = [], field = '', inQuotes = false;
+    for(let i=0;i<str.length;i++){
+      const ch = str[i];
+      if(inQuotes){
+        if(ch === '"'){
+          if(str[i+1] === '"'){ field += '"'; i++; }
+          else { inQuotes = false; }
+        } else {
+          field += ch;
+        }
+      } else if(ch === '"'){
+        inQuotes = true;
+      } else if(ch === delimiter){
+        row.push(field); field = '';
+      } else if(ch === '\r'){
+        // ignore, \n (or end) closes the row
+      } else if(ch === '\n'){
+        row.push(field); rows.push(row); row = []; field = '';
+      } else {
+        field += ch;
+      }
+    }
+    if(field.length > 0 || row.length > 0){ row.push(field); rows.push(row); }
+    return rows.filter(r => !(r.length===1 && r[0].trim()===''));
+  }
+
+  /** Best-effort conversion of a free-text date into YYYY-MM-DD; '' if unparseable. */
+  function normalizeDateString(s){
+    s = String(s||'').trim();
+    if(!s) return '';
+    if(/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
+    const d = new Date(s);
+    if(isNaN(d.getTime())) return '';
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth()+1).padStart(2,'0');
+    const dd = String(d.getDate()).padStart(2,'0');
+    return `${yyyy}-${mm}-${dd}`;
+  }
+
+  /** Simple "name, sector, water" target-list import. */
+  function importCompanyListCSV(rows){
+    const header = rows[0].map(h => String(h||'').trim().toLowerCase());
+    const nameIdx = header.indexOf('name');
+    const sectorIdx = header.indexOf('sector');
+    const waterIdx = header.indexOf('water');
+    if(rows.length === 1){
+      return { added:0, message:'That CSV only has a header row — nothing to import.' };
+    }
+
+    const existingNames = new Set(companies.map(c => c.name.trim().toLowerCase()));
+    let added = 0, dup = 0, missing = 0;
+    for(let i=1; i<rows.length; i++){
+      const r = rows[i];
+      if(!r || r.every(v => String(v||'').trim() === '')) continue;
+      const name = String(r[nameIdx]||'').trim();
+      if(!name){ missing++; continue; }
+      const key = name.toLowerCase();
+      if(existingNames.has(key)){ dup++; continue; }
+      const sector = sectorIdx > -1 ? String(r[sectorIdx]||'').trim() : '';
+      const water = waterIdx > -1 ? String(r[waterIdx]||'').trim() : '';
+      companies.push(normalizeCompany({ name, sector, water, open:false }));
+      existingNames.add(key);
+      added++;
+    }
+
+    let message = `Imported ${added} compan${added===1?'y':'ies'}.`;
+    if(dup>0) message += ` Skipped ${dup} duplicate${dup===1?'':'s'} already in the queue.`;
+    if(missing>0) message += ` Skipped ${missing} row${missing===1?'':'s'} missing a name.`;
+    return { added, dup, missing, message };
+  }
+
+  /**
+   * Full ledger import — matches the columns produced by the Export tab's
+   * "Download .csv": Company, Sector, Category, Name, Title, Source, Accessed, Access status.
+   * Rows are analysed and sorted into the right company + lead category automatically.
+   */
+  function importLedgerCSV(rows){
+    const header = rows[0].map(h => String(h||'').trim().toLowerCase());
+    const idx = {
+      company: header.indexOf('company'),
+      sector: header.indexOf('sector'),
+      category: header.indexOf('category'),
+      name: header.indexOf('name'),
+      title: header.indexOf('title'),
+      source: header.indexOf('source'),
+      accessed: header.indexOf('accessed'),
+      accessStatus: header.indexOf('access status')
+    };
+    if(idx.category === -1){
+      return { added:0, error:true, message:'That looks like a ledger export but has no "Category" column — expected Sustainability / ESG, Procurement / Supply chain, or Not accessible.' };
+    }
+    if(rows.length === 1){
+      return { added:0, message:'That CSV only has a header row — nothing to import.' };
+    }
+
+    const companyLookup = new Map(companies.map(c => [c.name.trim().toLowerCase(), c]));
+    const matchedKeys = new Set();
+    let companiesCreated = 0, leadsAdded = 0, naAdded = 0, dupSkipped = 0, rowsSkipped = 0;
+
+    for(let i=1; i<rows.length; i++){
+      const r = rows[i];
+      if(!r || r.every(v => String(v||'').trim() === '')) continue;
+
+      const companyName = idx.company > -1 ? String(r[idx.company]||'').trim() : '';
+      if(!companyName){ rowsSkipped++; continue; }
+      const key = companyName.toLowerCase();
+      let c = companyLookup.get(key);
+      if(!c){
+        c = normalizeCompany({ name: companyName, sector: idx.sector>-1 ? String(r[idx.sector]||'').trim() : '', open:false });
+        companies.push(c);
+        companyLookup.set(key, c);
+        companiesCreated++;
+      }
+      matchedKeys.add(key);
+
+      const category = (idx.category > -1 ? String(r[idx.category]||'') : '').toLowerCase();
+      const nameVal = idx.name > -1 ? String(r[idx.name]||'').trim() : '';
+      const titleVal = idx.title > -1 ? String(r[idx.title]||'').trim() : '';
+      const sourceVal = idx.source > -1 ? String(r[idx.source]||'').trim() : '';
+      const dateVal = idx.accessed > -1 ? normalizeDateString(r[idx.accessed]) : '';
+      const statusRaw = idx.accessStatus > -1 ? String(r[idx.accessStatus]||'').toLowerCase() : '';
+      const status = statusRaw.includes('restrict') ? 'restricted' : 'verified';
+
+      if(category.includes('not access')){
+        const entry = (titleVal || nameVal).trim();
+        if(!entry){ rowsSkipped++; continue; }
+        const exists = c.notAccessible.some(x => x.toLowerCase() === entry.toLowerCase());
+        if(exists){ dupSkipped++; continue; }
+        c.notAccessible.push(entry.slice(0,300));
+        naAdded++;
+        continue;
+      }
+
+      let targetField = null;
+      if(category.includes('sustain') || category.includes('esg')) targetField = 'sustainabilityLeads';
+      else if(category.includes('procure') || category.includes('supply')) targetField = 'procurementLeads';
+
+      if(!targetField){ rowsSkipped++; continue; }
+      if(!nameVal && !titleVal){ rowsSkipped++; continue; }
+
+      const dupExists = c[targetField].some(l =>
+        l.name.toLowerCase() === nameVal.toLowerCase() && l.title.toLowerCase() === titleVal.toLowerCase());
+      if(dupExists){ dupSkipped++; continue; }
+
+      c[targetField].push(normalizeLead({ name:nameVal, title:titleVal, source:sourceVal, date:dateVal, status }));
+      leadsAdded++;
+    }
+
+    const companiesMatched = matchedKeys.size - companiesCreated;
+    const parts = [];
+    if(companiesCreated) parts.push(`${companiesCreated} new compan${companiesCreated===1?'y':'ies'}`);
+    if(companiesMatched) parts.push(`${companiesMatched} existing compan${companiesMatched===1?'y':'ies'} updated`);
+    if(leadsAdded) parts.push(`${leadsAdded} lead${leadsAdded===1?'':'s'}`);
+    if(naAdded) parts.push(`${naAdded} not-accessible entr${naAdded===1?'y':'ies'}`);
+    let message = parts.length ? `Sorted: ${parts.join(', ')}.` : 'Nothing new to import.';
+    if(dupSkipped) message += ` Skipped ${dupSkipped} already recorded.`;
+    if(rowsSkipped) message += ` Skipped ${rowsSkipped} row${rowsSkipped===1?'':'s'} that couldn't be matched to a company or category.`;
+
+    return { added: companiesCreated + leadsAdded + naAdded, companiesCreated, leadsAdded, naAdded, dupSkipped, rowsSkipped, message };
+  }
+
+  /**
+   * Company-directory import — e.g. a target-list research sheet with columns like
+   * Rank, Company Name, Trading Name, Sector, Primary SIC Code, Region, Headquarters Location,
+   * Turnover (£m), Employees (UK), Companies House Number, Website URL, Source(s).
+   * Column names are matched loosely (case-insensitive "contains") so minor header variations
+   * still work. Comma- or tab-separated files are both supported (auto-detected upstream).
+   */
+  function importDirectoryCSV(rows){
+    const header = rows[0].map(h => String(h||'').trim().toLowerCase());
+    const findIdx = pred => header.findIndex(pred);
+    const idx = {
+      name: findIdx(h => h.includes('company name')),
+      trading: findIdx(h => h.includes('trading name')),
+      sector: findIdx(h => h === 'sector'),
+      sic: findIdx(h => h.includes('sic code')),
+      region: findIdx(h => h === 'region'),
+      hq: findIdx(h => h.includes('headquarters')),
+      turnover: findIdx(h => h.includes('turnover')),
+      employees: findIdx(h => h.includes('employees')),
+      ch: findIdx(h => h.includes('companies house number')),
+      website: findIdx(h => h.includes('website')),
+      sources: findIdx(h => h.includes('source'))
+    };
+    if(idx.name === -1){
+      return { added:0, error:true, message:'That looks like a company directory but has no "Company Name" column.' };
+    }
+    if(rows.length === 1){
+      return { added:0, message:'That file only has a header row — nothing to import.' };
+    }
+
+    const expectedCols = header.length;
+    const existingNames = new Set(companies.map(c => c.name.trim().toLowerCase()));
+    let added = 0, dup = 0, missing = 0, malformed = 0;
+    const malformedPreview = [];
+    const get = (r, i) => i > -1 ? String(r[i]||'').trim() : '';
+
+    for(let i=1; i<rows.length; i++){
+      const r = rows[i];
+      if(!r || r.every(v => String(v||'').trim() === '')) continue;
+
+      // A row with MORE fields than the header usually means an unescaped comma/tab landed
+      // inside a value (e.g. "BECTON, DICKINSON U.K. LIMITED" splitting into two columns) —
+      // guessing how to merge it back risks silently shifting every later column, so we
+      // flag it for manual review instead of importing corrupted data.
+      if(r.length > expectedCols){
+        malformed++;
+        if(malformedPreview.length < 3) malformedPreview.push(`"${r.slice(0,2).join(' / ')}"`);
+        continue;
+      }
+
+      const name = get(r, idx.name);
+      if(!name){ missing++; continue; }
+      const key = name.toLowerCase();
+      if(existingNames.has(key)){ dup++; continue; }
+
+      companies.push(normalizeCompany({
+        name,
+        sector: get(r, idx.sector),
+        tradingName: get(r, idx.trading),
+        sicCode: get(r, idx.sic),
+        region: get(r, idx.region),
+        hq: get(r, idx.hq),
+        turnover: get(r, idx.turnover),
+        employees: get(r, idx.employees),
+        chNumber: get(r, idx.ch),
+        website: get(r, idx.website),
+        sources: get(r, idx.sources),
+        open: false
+      }));
+      existingNames.add(key);
+      added++;
+    }
+
+    let message = `Imported ${added} compan${added===1?'y':'ies'}.`;
+    if(dup>0) message += ` Skipped ${dup} duplicate${dup===1?'':'s'} already in the queue.`;
+    if(missing>0) message += ` Skipped ${missing} row${missing===1?'':'s'} missing a company name.`;
+    if(malformed>0) message += ` Flagged ${malformed} row${malformed===1?'':'s'} with more columns than the header, likely an unescaped delimiter in a value — not imported, to avoid shifting data into the wrong fields (e.g. ${malformedPreview.join(', ')}).`;
+    return { added, dup, missing, malformed, message, error: (added===0 && malformed>0) };
+  }
+
+  /** Drops trailing empty cells (common when a spreadsheet export leaves a trailing delimiter),
+   *  so genuine column-count corruption isn't masked by harmless padding. */
+  function trimTrailingEmpty(row){
+    let end = row.length;
+    while(end > 0 && String(row[end-1]||'').trim() === '') end--;
+    return row.slice(0, end);
+  }
+
+  /** Detects which of the three supported CSV/TSV shapes we've been given, and routes accordingly. */
+  function importCSV(text){
+    text = String(text||'').replace(/^\uFEFF/, ''); // strip UTF-8 BOM if present
+    const delimiter = detectDelimiter(text);
+    const rows = parseCSV(text, delimiter).map(trimTrailingEmpty);
+    if(rows.length === 0) return { added:0, error:true, message:'That looks empty — nothing to import.' };
+    const header = rows[0].map(h => String(h||'').trim().toLowerCase());
+    if(header.includes('company name')) return importDirectoryCSV(rows);
+    if(header.includes('company')) return importLedgerCSV(rows);
+    if(header.includes('name')) return importCompanyListCSV(rows);
+    return { added:0, error:true, message:'No "Company Name", "name", or "Company" column found — check the header row matches one of the supported formats.' };
+  }
+
+  // ---------- Smart paste-splitting for Name/Title fields ----------
+
+  /**
+   * If a pasted string looks like "Name, Title" / "Name – Title" / "Name - Title",
+   * splits it into { name, title }; otherwise returns null so the caller leaves the
+   * field alone. This only acts on text the person has explicitly copied and pasted —
+   * it never fetches or reads anything itself.
+   */
+  function splitNameTitle(raw){
+    const s = String(raw||'').trim();
+    if(!s) return null;
+    const m = s.match(/^(.+?)\s*(?:,|\t|-|–|—)\s*(.+)$/);
+    if(!m) return null;
+    const name = m[1].trim();
+    const title = m[2].trim().replace(/\s+at\s+.+$/i, '').trim();
+    if(!name || !title) return null;
+    return { name, title };
+  }
+
+  /** Wires paste-splitting onto a Name/Title input pair: pasting a combined string into
+   *  either field fills both, but only when the field being filled in is still empty —
+   *  so it never overwrites something already typed. */
+  function wireSmartPaste(nameInp, titleInp){
+    if(!nameInp || !titleInp) return;
+    const onPaste = (sourceInp) => {
+      setTimeout(()=>{
+        const split = splitNameTitle(sourceInp.value);
+        if(!split) return;
+        const otherInp = sourceInp === nameInp ? titleInp : nameInp;
+        if(otherInp.value.trim() !== '') return; // don't clobber something already entered
+        nameInp.value = split.name;
+        titleInp.value = split.title;
+        announce('Split pasted text into Name and Title — check before adding.');
+      }, 0);
+    };
+    nameInp.addEventListener('paste', () => onPaste(nameInp));
+    titleInp.addEventListener('paste', () => onPaste(titleInp));
+  }
+
+  // ---------- Paste LinkedIn contacts (per company) ----------
+
+  /** Best-effort category suggestion from a job title; caller can always override. */
+  function guessLeadCategory(title){
+    const t = String(title||'').toLowerCase();
+    if(/sustain|\besg\b|environment|climate|responsib/.test(t)) return 'sustainabilityLeads';
+    if(/procure|supply chain|sourcing|purchasing/.test(t)) return 'procurementLeads';
+    return 'sustainabilityLeads';
+  }
+
+  /**
+   * Parses pasted LinkedIn contact data into { name, title, source, companyText } records.
+   * Handles three shapes, tried in order:
+   *  1. A LinkedIn "Connections" CSV/TSV export (First Name, Last Name, Position, URL, Company…).
+   *  2. Simple delimited rows: Name, Title[, Source URL] (comma or tab separated).
+   *  3. Freeform copy/paste from a LinkedIn search page: alternating Name then
+   *     "Title" or "Title at Company" lines, with an optional profile URL line.
+   * Consecutive duplicate lines (LinkedIn's screen-reader duplication) and common UI
+   * noise ("2nd", "Connect", "Message"…) are stripped first.
+   */
+  function parseLinkedInPaste(text){
+    text = String(text||'').replace(/^\uFEFF/, '');
+    let lines = text.split(/\r\n|\r|\n/).map(l => l.trim());
+    const noiseRe = /^(1st|2nd|3rd\+?|message|connect|follow|pending|·|•|\d+(st|nd|rd|th)\s+degree\s+connection)$/i;
+    lines = lines.filter(l => l !== '' && !noiseRe.test(l));
+    const deduped = [];
+    for(const l of lines){ if(deduped[deduped.length-1] !== l) deduped.push(l); }
+    lines = deduped;
+    if(lines.length === 0) return [];
+
+    const joined = lines.join('\n');
+    const delimiter = detectDelimiter(joined);
+    const delimitedShare = lines.filter(l => l.includes(delimiter)).length / lines.length;
+
+    if(delimitedShare > 0.6){
+      const rows = parseCSV(joined, delimiter).map(trimTrailingEmpty);
+      if(rows.length === 0) return [];
+      const header = rows[0].map(h => String(h||'').trim().toLowerCase());
+      const looksLikeExport = header.includes('position') || (header.includes('first name') && header.includes('last name'));
+
+      if(looksLikeExport){
+        const fnIdx = header.indexOf('first name');
+        const lnIdx = header.indexOf('last name');
+        const posIdx = header.indexOf('position');
+        const urlIdx = header.findIndex(h => h.includes('url'));
+        const coIdx = header.indexOf('company');
+        const out = [];
+        for(let i=1; i<rows.length; i++){
+          const r = rows[i];
+          if(!r || r.every(v => String(v||'').trim()==='')) continue;
+          const name = [fnIdx>-1?r[fnIdx]:'', lnIdx>-1?r[lnIdx]:''].map(v=>String(v||'').trim()).filter(Boolean).join(' ');
+          const title = posIdx>-1 ? String(r[posIdx]||'').trim() : '';
+          const source = urlIdx>-1 ? String(r[urlIdx]||'').trim() : '';
+          const companyText = coIdx>-1 ? String(r[coIdx]||'').trim() : '';
+          if(!name && !title) continue;
+          out.push({ name, title, source, companyText });
+        }
+        return out;
+      }
+
+      const out = [];
+      for(let i=0; i<rows.length; i++){
+        const r = rows[i];
+        if(!r || r.every(v => String(v||'').trim()==='')) continue;
+        const name = String(r[0]||'').trim();
+        const title = String(r[1]||'').trim();
+        const source = String(r[2]||'').trim();
+        if(i===0 && /^name$/i.test(name) && /^(title|role|position)$/i.test(title)) continue; // skip an obvious header row
+        if(!name && !title) continue;
+        out.push({ name, title, source, companyText:'' });
+      }
+      return out;
+    }
+
+    // Freeform fallback: Name line, then "Title" or "Title at Company", then optional URL.
+    const out = [];
+    let i = 0;
+    while(i < lines.length){
+      const name = lines[i]; i++;
+      if(!name) continue;
+      let title = '', source = '', companyText = '';
+      if(i < lines.length && /^https?:\/\//i.test(lines[i])){
+        source = lines[i]; i++;
+      } else if(i < lines.length){
+        const m = lines[i].match(/^(.*?)\s+at\s+(.+)$/i);
+        if(m){ title = m[1].trim(); companyText = m[2].trim(); } else { title = lines[i]; }
+        i++;
+        if(i < lines.length && /^https?:\/\//i.test(lines[i])){ source = lines[i]; i++; }
+      }
+      out.push({ name, title, source, companyText });
+    }
+    return out;
+  }
+
+
+  function runImport(text, resetUi){
+    let result;
+    try{
+      result = importCSV(text);
+    }catch(err){
+      announce('Could not parse that CSV — check it is valid, comma-separated data with a header row.', true);
+      return;
+    }
+    announce(result.message, !!result.error);
+    if(result.added > 0){ renderAll(); }
+    if(resetUi) resetUi();
+  }
+
+  document.getElementById('csvFile').addEventListener('change', e=>{
+    const f = e.target.files && e.target.files[0];
+    document.getElementById('csvFileName').textContent = f ? f.name : 'no file selected';
+  });
+
+  document.getElementById('importCsvBtn').addEventListener('click', ()=>{
+    const input = document.getElementById('csvFile');
+    const file = input.files && input.files[0];
+    if(!file){ announce('Choose a CSV file first.', true); return; }
+    if(file.size > MAX_CSV_BYTES){ announce('That file is larger than 5MB — please split it up.', true); return; }
+
+    const reader = new FileReader();
+    reader.onerror = () => announce('Could not read that file — it may be corrupted or inaccessible.', true);
+    reader.onload = (ev) => {
+      runImport(String(ev.target.result || ''), () => {
+        input.value = '';
+        document.getElementById('csvFileName').textContent = 'no file selected';
+      });
+    };
+    reader.readAsText(file);
+  });
+
+  document.getElementById('importPasteBtn').addEventListener('click', ()=>{
+    const ta = document.getElementById('csvPaste');
+    const text = ta.value;
+    if(!text.trim()){ announce('Paste some CSV data first.', true); return; }
+    if(text.length > MAX_PASTE_CHARS){ announce('That pasted data is very large — try importing it as a file instead.', true); return; }
+    runImport(text, () => { ta.value = ''; });
+  });
+
+  document.getElementById('setupSearch').addEventListener('input', e=>{
+    setupSearch = e.target.value; renderCompanyList();
+  });
+  document.getElementById('researchSearch').addEventListener('input', e=>{
+    researchSearch = e.target.value; renderResearch();
+  });
+
+  let bulkBlockedLinks = null; // [{ companyName, label, url }] — transient, cleared on dismiss/re-run
+
+  function renderBulkBlocked(){
+    const el = document.getElementById('bulkBlockedContainer');
+    if(!bulkBlockedLinks || bulkBlockedLinks.length === 0){ el.innerHTML = ''; return; }
+    el.innerHTML = `
+      <div class="step-note">
+        Your browser blocked ${bulkBlockedLinks.length} link${bulkBlockedLinks.length===1?'':'s'} from opening automatically across this batch — click each below, or allow pop-ups for this page and try again.
+        <div class="btn-row" style="margin-top:8px;">
+          ${bulkBlockedLinks.map(l => `<a href="${escapeAttr(l.url)}" target="_blank" rel="noopener noreferrer" class="action ghost small" style="text-decoration:none; display:inline-block;">${escapeHtml(l.companyName)} — ${escapeHtml(l.label)} ↗</a>`).join('')}
+        </div>
+        <button class="action ghost small" id="dismissBulkBlockedBtn" style="margin-top:8px;">Dismiss</button>
+      </div>
+    `;
+    const dismissBtn = document.getElementById('dismissBulkBlockedBtn');
+    if(dismissBtn) dismissBtn.addEventListener('click', ()=>{ bulkBlockedLinks = null; renderBulkBlocked(); });
+  }
+
+  document.getElementById('fetchAllLinksBtn').addEventListener('click', async ()=>{
+    const visible = companies.filter(c => matchesQuery(c, researchSearch));
+    if(visible.length === 0){ announce('No companies to fetch links for — check your filter or add companies first.', true); return; }
+    const totalLinks = visible.reduce((sum,c) => sum + buildResearchLinks(c).length, 0);
+    if(totalLinks === 0){ announce('No research links available for the visible companies.', true); return; }
+    const proceed = await showConfirm(`This will try to open ${totalLinks} tabs across ${visible.length} compan${visible.length===1?'y':'ies'} (Steps 1–6). Continue?`);
+    if(!proceed) return;
+
+    let openedTotal = 0, blockedTotal = 0;
+    const nowIso = new Date().toISOString();
+    bulkBlockedLinks = [];
+    visible.forEach(c=>{
+      const links = buildResearchLinks(c);
+      if(links.length === 0) return;
+      const result = openLinksWithDetection(links);
+      openedTotal += result.opened;
+      blockedTotal += result.blocked.length;
+      c.lastFetched = nowIso;
+      result.blocked.forEach(l => bulkBlockedLinks.push({ companyName: c.name, label: l.label, url: l.url }));
+    });
+    if(bulkBlockedLinks.length === 0) bulkBlockedLinks = null;
+    renderResearch(); updateStats(); renderBulkBlocked();
+    if(blockedTotal === 0){
+      announce(`Opened ${openedTotal} research links across ${visible.length} compan${visible.length===1?'y':'ies'}.`);
+    } else {
+      announce(`Opened ${openedTotal} of ${totalLinks} links. ${blockedTotal} blocked by your browser's pop-up blocker — click them individually below.`, true);
+    }
+  });
+
+  function renderCompanyList(){
+    const el = document.getElementById('companyList');
+    const dupIds = duplicateNameIds();
+    const visible = companies.filter(c=>matchesQuery(c, setupSearch));
+    document.getElementById('setupCount').textContent = companies.length
+      ? `${visible.length} of ${companies.length} shown`
+      : '';
+
+    if(companies.length===0){ el.innerHTML = '<p class="empty">No companies added yet.</p>'; return; }
+    if(visible.length===0){ el.innerHTML = '<p class="empty">No companies match that filter.</p>'; return; }
+
+    el.innerHTML = visible.map(c=>{
+      if(c.editingDetails){
+        return `
+        <div class="company-card">
+          <div style="padding:14px 16px;">
+            <div class="grid3">
+              <div class="field"><label>Company name</label><input type="text" data-edit-f="name" value="${escapeAttr(c.name)}" maxlength="${MAX_NAME_LEN}"></div>
+              <div class="field"><label>Sector</label><input type="text" data-edit-f="sector" value="${escapeAttr(c.sector)}"></div>
+              <div class="field"><label>Water relevance</label><input type="text" data-edit-f="water" value="${escapeAttr(c.water)}"></div>
+            </div>
+            <div class="track-label" style="margin:4px 0 8px;">Directory details (optional)</div>
+            <div class="grid3">
+              <div class="field"><label>Trading name</label><input type="text" data-edit-f="tradingName" value="${escapeAttr(c.tradingName)}"></div>
+              <div class="field"><label>Primary SIC code</label><input type="text" data-edit-f="sicCode" value="${escapeAttr(c.sicCode)}"></div>
+              <div class="field"><label>Region</label><input type="text" data-edit-f="region" value="${escapeAttr(c.region)}"></div>
+            </div>
+            <div class="grid3">
+              <div class="field"><label>Headquarters location</label><input type="text" data-edit-f="hq" value="${escapeAttr(c.hq)}"></div>
+              <div class="field"><label>Turnover (£m)</label><input type="text" data-edit-f="turnover" value="${escapeAttr(c.turnover)}"></div>
+              <div class="field"><label>Employees (UK)</label><input type="text" data-edit-f="employees" value="${escapeAttr(c.employees)}"></div>
+            </div>
+            <div class="grid3">
+              <div class="field"><label>Companies House number</label><input type="text" data-edit-f="chNumber" value="${escapeAttr(c.chNumber)}"></div>
+              <div class="field"><label>Website URL</label><input type="text" data-edit-f="website" value="${escapeAttr(c.website)}" placeholder="https://…"></div>
+              <div class="field"><label>Source(s)</label><input type="text" data-edit-f="sources" value="${escapeAttr(c.sources)}"></div>
+            </div>
+            <div class="btn-row">
+              <button class="action small" data-save-company="${c.id}">Save</button>
+              <button class="action ghost small" data-cancel-company="${c.id}">Cancel</button>
+            </div>
+          </div>
+        </div>`;
+      }
+      const profileBits = [
+        c.tradingName && `t/a ${c.tradingName}`,
+        c.sicCode && `SIC ${c.sicCode}`,
+        c.region,
+        c.hq && `HQ ${c.hq}`,
+        c.turnover && `Turnover £${c.turnover}m`,
+        c.employees && `Employees ${c.employees}`,
+        c.chNumber && `CH# ${c.chNumber}`
+      ].filter(Boolean).map(escapeHtml).join(' · ');
+      const websiteHref = toSafeHref(c.website);
+      return `
+      <div class="company-card ${c.status==='complete'?'is-complete':''}">
+        <div class="company-head">
+          <div>
+            <h3>${escapeHtml(c.name)}</h3>
+            ${c.status==='complete' ? '<span class="badge complete">complete</span>' : '<span class="badge pending">pending</span>'}
+            ${dupIds.has(c.id) ? '<span class="badge dup">duplicate name</span>' : ''}
+            <div class="meta">${escapeHtml(c.sector || 'Sector not set')}${c.water ? ' · '+escapeHtml(c.water) : ''}</div>
+            ${profileBits || websiteHref ? `<div class="meta">${profileBits}${profileBits && websiteHref ? ' · ' : ''}${websiteHref ? `<a href="${escapeAttr(websiteHref)}" target="_blank" rel="noopener noreferrer">${escapeHtml(c.website)}</a>` : ''}</div>` : ''}
+          </div>
+          <div class="btn-row">
+            <button class="action ghost small" data-edit-company="${c.id}">Edit</button>
+            <button class="action danger small" data-remove="${c.id}" aria-label="Remove ${escapeAttr(c.name)}">Remove</button>
+          </div>
+        </div>
+      </div>
+    `;
+    }).join('');
+
+    el.querySelectorAll('[data-remove]').forEach(b=>{
+      b.addEventListener('click', async ()=>{
+        const c = findCompany(b.dataset.remove);
+        if(!c) return;
+        const ok = await showConfirm(`Remove "${c.name}" and all its recorded leads? This cannot be undone.`);
+        if(!ok) return;
+        companies = companies.filter(x=>x.id !== c.id);
+        renderAll();
+        announce(`Removed ${c.name}.`);
+      });
+    });
+    el.querySelectorAll('[data-edit-company]').forEach(b=>{
+      b.addEventListener('click', ()=>{
+        const c = findCompany(b.dataset.editCompany);
+        if(c) c.editingDetails = true;
+        renderCompanyList();
+      });
+    });
+    el.querySelectorAll('[data-cancel-company]').forEach(b=>{
+      b.addEventListener('click', ()=>{
+        const c = findCompany(b.dataset.cancelCompany);
+        if(c) c.editingDetails = false;
+        renderCompanyList();
+      });
+    });
+    el.querySelectorAll('[data-save-company]').forEach(b=>{
+      b.addEventListener('click', ()=>{
+        const c = findCompany(b.dataset.saveCompany);
+        if(!c) return;
+        const card = b.closest('.company-card');
+        const get = f => card.querySelector(`[data-edit-f="${f}"]`).value.trim();
+        const newName = get('name');
+        if(!newName){ announce('Company name cannot be empty.', true); return; }
+        c.name = newName.slice(0,MAX_NAME_LEN);
+        c.sector = get('sector').slice(0,200);
+        c.water = get('water').slice(0,300);
+        c.tradingName = get('tradingName').slice(0,200);
+        c.sicCode = get('sicCode').slice(0,50);
+        c.region = get('region').slice(0,100);
+        c.hq = get('hq').slice(0,150);
+        c.turnover = get('turnover').slice(0,50);
+        c.employees = get('employees').slice(0,50);
+        c.chNumber = get('chNumber').slice(0,20);
+        c.website = get('website').slice(0,300);
+        c.sources = get('sources').slice(0,300);
+        c.editingDetails = false;
+        renderAll();
+        announce('Company details updated.');
+      });
+    });
+  }
+
+  // ---------- Research tab ----------
+  function renderResearch(){
+    const el = document.getElementById('researchList');
+    const visible = companies.filter(c=>matchesQuery(c, researchSearch));
+    document.getElementById('researchCount').textContent = companies.length
+      ? `${visible.length} of ${companies.length} shown`
+      : '';
+
+    if(companies.length===0){ el.innerHTML = '<p class="empty">Add companies in the Targets tab first.</p>'; return; }
+    if(visible.length===0){ el.innerHTML = '<p class="empty">No companies match that filter.</p>'; return; }
+
+    el.innerHTML = visible.map(c=>companyResearchCard(c)).join('');
+    attachResearchHandlers();
+  }
+
+  function companyResearchCard(c){
+    const q = encodeURIComponent(c.name);
+    const websiteHref = toSafeHref(c.website);
+    const hasCH = isLikelyCHNumber(c.chNumber);
+    const links = buildResearchLinks(c);
+    const profileLine = [
+      c.tradingName && `t/a ${c.tradingName}`,
+      c.region,
+      c.hq && `HQ ${c.hq}`
+    ].filter(Boolean).map(escapeHtml).join(' · ');
+    return `
+    <div class="company-card ${c.status==='complete'?'is-complete':''}" data-cid="${c.id}">
+      <div class="company-head" data-toggle="${c.id}" role="button" tabindex="0" aria-expanded="${c.open}">
+        <div>
+          <h3>${escapeHtml(c.name)}</h3>
+          ${c.status==='complete' ? '<span class="badge complete">complete</span>' : '<span class="badge pending">pending</span>'}
+          ${profileLine ? `<div class="meta">${profileLine}</div>` : ''}
+          <div class="meta">${(c.sustainabilityLeads.length+c.procurementLeads.length)} lead(s) recorded · ${c.notAccessible.length} marked not accessible</div>
+        </div>
+        <div class="chev">${c.open ? '▾ collapse' : '▸ expand'}</div>
+      </div>
+      <div class="company-body ${c.open?'open':''}">
+
+        <div class="btn-row" style="align-items:center; margin-bottom:14px;">
+          <button class="action" data-fetch-links="${c.id}">Open Step 1–6 links ↗</button>
+          <span class="count">${c.lastFetched ? `Links last opened: ${escapeHtml(formatDateTime(c.lastFetched))}` : 'Not yet opened'}</span>
+        </div>
+        <div data-blocked-container="${c.id}">${blockedLinksHtml(c)}</div>
+
+        <div class="step-guide">
+          <strong>Step 1 — Reports.</strong> Search on the company's own site — check Investor Relations / Sustainability / ESG sections for named executives.
+          ${stepLinksHtml(links, 1)}
+        </div>
+        <div class="step-guide">
+          <strong>Step 2 — Leadership pages.</strong> Look under About Us → Leadership / Executive Team / Board of Directors for Chief Sustainability Officer, Director of Sustainability/ESG, Chief Procurement Officer, or Supply Chain Director.
+          ${stepLinksHtml(links, 2)}
+        </div>
+        <div class="step-guide">
+          <strong>Step 3 — LinkedIn.</strong> From your own logged-in account, search company + role title — only record profiles that are public.
+          ${stepLinksHtml(links, 3)}
+        </div>
+        <div class="step-note">
+          If the link above shows no results, LinkedIn is likely blocking the deep link because that browser tab isn't logged in (an authwall, not a genuine zero-result search). Copy the query above and paste it into LinkedIn's own search bar from a tab or the app where you're already signed in.
+        </div>
+
+        <div class="track-label">Paste LinkedIn contacts</div>
+        <p class="panel-note" style="margin:0 0 8px;">Paste contacts you've found for <strong>${escapeHtml(c.name)}</strong> — one per line as <code>Name, Title</code> (a profile URL as a third value is optional), a LinkedIn "Connections" CSV export, or plain alternating Name / Title lines copied from a search page. Preview and edit before anything is saved.</p>
+        <div class="field">
+          <textarea data-li-input="${c.id}" rows="5" placeholder="Jane Doe, Chief Sustainability Officer, https://linkedin.com/in/janedoe&#10;John Smith, Group Procurement Director" aria-label="Paste LinkedIn contacts for ${escapeAttr(c.name)}"></textarea>
+        </div>
+        <div class="btn-row" style="margin-bottom:10px;">
+          <button class="action ghost small" data-li-parse="${c.id}">Preview contacts</button>
+        </div>
+        <div data-li-preview-container="${c.id}">${liPreviewHtml(c)}</div>
+
+        <div class="step-guide">
+          <strong>Step 4 — Companies House.</strong> For UK-registered entities, check the officers list for appointment dates — this is a primary record and often catches changes before a leadership page is updated. Cross-check the officer's appointment/resignation dates to confirm the role is still current.
+          ${stepLinksHtml(links, 4)}
+        </div>
+        ${c.sicCode || c.sources ? `<div class="step-note">${[c.sicCode && `Primary SIC code on file: ${escapeHtml(c.sicCode)}.`, c.sources && `Directory source(s): ${escapeHtml(c.sources)}.`].filter(Boolean).join(' ')}</div>` : ''}
+        <div class="step-guide">
+          <strong>Step 5 — Payment practices (large businesses).</strong> Large UK companies must report their invoice payment practices twice a year — each report is signed off by a named director, which is a useful, dated confirmation of a current board-level contact, and the reporting duty itself is a signal the company is large enough to be a worthwhile target.
+          ${stepLinksHtml(links, 5)}
+        </div>
+        <div class="lead-row" style="grid-template-columns:1fr auto;">
+          <div><label>Company name</label><input type="text" readonly value="${escapeAttr(c.name)}" data-payment-name="${c.id}"></div>
+          <button class="action ghost small" data-copy-name="${c.id}">Copy name</button>
+        </div>
+        ${hasCH ? '' : `<div class="step-note">Add this company's Companies House number in the Targets tab to jump straight to its reports. Until then, copy the name above and paste it into the search box.</div>`}
+        <div class="step-guide">
+          <strong>Step 6 — News, press releases &amp; site updates.</strong> Search for recent appointment announcements, which frequently name a new hire before any profile page does — and check whether a later article supersedes an earlier one (a departure or move you'd otherwise miss).
+          ${stepLinksHtml(links, 6)}
+        </div>
+        <div class="step-guide">
+          <strong>Step 7 — Ongoing monitoring &amp; thought leadership.</strong> Set a standing alert instead of only checking once, and use the Wayback Machine to see when a leadership page last changed if you're unsure how current it is. Conference speaker lists, award wins and bylined articles are also a good signal that someone is actively, currently in the role.
+          <a href="https://www.google.com/alerts#create;q=${q}%20sustainability%20OR%20procurement%20director" target="_blank" rel="noopener noreferrer">Set a Google Alert ↗</a>
+          <a href="https://web.archive.org/" target="_blank" rel="noopener noreferrer">Wayback Machine ↗</a>
+          <a href="https://www.google.com/search?q=${q}+conference+speaker+OR+award+OR+%22written+by%22" target="_blank" rel="noopener noreferrer">Search mentions ↗</a>
+        </div>
+
+        <div class="track-label">Sustainability / ESG leads</div>
+        ${leadRowsHtml(c, 'sustainabilityLeads')}
+        ${addLeadFormHtml(c.id, 'sustainabilityLeads')}
+
+        <div class="track-label">Procurement / Supply chain leads</div>
+        ${leadRowsHtml(c, 'procurementLeads')}
+        ${addLeadFormHtml(c.id, 'procurementLeads')}
+
+        <div class="track-label">Not accessible</div>
+        ${notAccessibleHtml(c)}
+        <div class="lead-row" style="grid-template-columns:1fr auto;">
+          <div><label>Role/title behind a login or paywall</label><input type="text" placeholder="e.g. Head of Procurement (LinkedIn — connection required)" data-na-input="${c.id}"></div>
+          <button class="action small" data-add-na="${c.id}">Add</button>
+        </div>
+
+        <div class="track-label">Status</div>
+        <div class="btn-row">
+          <button class="action ${c.status==='complete' ? 'ghost' : ''} small" data-mark-status="${c.id}" data-target="${c.status==='complete' ? 'pending' : 'complete'}">
+            ${c.status==='complete' ? 'Reopen as pending' : 'Mark research complete'}
+          </button>
+        </div>
+
+      </div>
+    </div>`;
+  }
+
+  function leadRowsHtml(c, field){
+    const rows = c[field];
+    if(rows.length===0) return '<p class="empty">No leads recorded yet.</p>';
+    return rows.map((r,i)=>{
+      if(r.editing){
+        return `
+        <div class="lead-row">
+          <div><label>Name</label><input type="text" data-ef="name" value="${escapeAttr(r.name)}"></div>
+          <div><label>Title</label><input type="text" data-ef="title" value="${escapeAttr(r.title)}"></div>
+          <div><label>Source URL</label><input type="text" data-ef="source" value="${escapeAttr(r.source)}" placeholder="https://…"></div>
+          <div><label>Accessed</label><input type="date" data-ef="date" value="${escapeAttr(r.date)}"></div>
+          <div><label>Access</label>
+            <select data-ef="status">
+              <option value="verified" ${r.status==='verified'?'selected':''}>Public</option>
+              <option value="restricted" ${r.status==='restricted'?'selected':''}>Restricted</option>
+            </select>
+          </div>
+          <div class="btn-row">
+            <button class="action small" data-save-lead="${c.id}|${field}|${i}">Save</button>
+            <button class="action ghost small" data-cancel-lead="${c.id}|${field}|${i}">Cancel</button>
+          </div>
+        </div>`;
+      }
+      const sourceHtml = isSafeUrl(r.source)
+        ? `<a href="${escapeAttr(r.source)}" target="_blank" rel="noopener noreferrer" style="font-family:var(--mono);font-size:12px;word-break:break-all;">${escapeHtml(r.source)}</a>`
+        : (r.source ? `<span style="font-family:var(--mono);font-size:12px;word-break:break-all;color:var(--restricted);" title="Doesn't look like a valid http(s) URL">${escapeHtml(r.source)}</span>` : '<span class="empty">no source</span>');
+      return `
+      <div class="lead-row">
+        <div><label>Name</label>${escapeHtml(r.name) || '<span class="empty">—</span>'}</div>
+        <div><label>Title</label>${escapeHtml(r.title) || '<span class="empty">—</span>'}</div>
+        <div><label>Source URL</label>${sourceHtml}</div>
+        <div><label>Accessed</label>${escapeHtml(r.date) || '<span class="empty">not recorded</span>'}</div>
+        <div><span class="status-pill ${r.status===STATUS.RESTRICTED?'restricted':'verified'}">${r.status===STATUS.RESTRICTED ? '⚠ restricted' : '✓ public'}</span></div>
+        <div class="btn-row">
+          <button class="action ghost small icon" data-edit-lead="${c.id}|${field}|${i}" aria-label="Edit ${escapeAttr(r.name)}">Edit</button>
+          <button class="action danger small icon" data-del-lead="${c.id}|${field}|${i}" aria-label="Delete ${escapeAttr(r.name)}">✕</button>
+        </div>
+      </div>
+    `;
+    }).join('');
+  }
+
+  function addLeadFormHtml(cid, field){
+    return `
+    <div class="lead-row" data-add-form="${cid}|${field}">
+      <div><label>Name <span class="req">*</span></label><input type="text" data-f="name"></div>
+      <div><label>Title <span class="req">*</span></label><input type="text" data-f="title"></div>
+      <div><label>Source URL</label><input type="text" data-f="source" placeholder="https://…"></div>
+      <div><label>Accessed</label><input type="date" data-f="date"></div>
+      <div><label>Access</label>
+        <select data-f="status">
+          <option value="verified">Public</option>
+          <option value="restricted">Restricted</option>
+        </select>
+      </div>
+      <div><button class="action small" data-add-lead="${cid}|${field}">Add</button></div>
+    </div>`;
+  }
+
+  function liPreviewHtml(c){
+    const preview = c._liPreview;
+    if(!preview) return '';
+    if(preview.length === 0){
+      return '<p class="empty">No contacts recognised in that paste — try one per line as "Name, Title", or check the format notes above.</p>';
+    }
+    const mismatches = preview.filter(p => p.companyText && p.companyText.toLowerCase() !== c.name.toLowerCase());
+    const warning = mismatches.length ? `
+      <div class="step-note">${mismatches.length} of ${preview.length} pasted contact${mismatches.length===1?'':'s'} list a different company on LinkedIn (e.g. "${escapeHtml(mismatches[0].companyText)}") — double check you copied the right batch before adding.</div>
+    ` : '';
+    const rows = preview.map((p,i)=>`
+      <div class="li-row" data-li-row="${c.id}|${i}">
+        <input type="checkbox" data-lf="include" ${p.include!==false?'checked':''} aria-label="Include this contact">
+        <div><label>Name</label><input type="text" data-lf="name" value="${escapeAttr(p.name)}"></div>
+        <div><label>Title</label><input type="text" data-lf="title" value="${escapeAttr(p.title)}"></div>
+        <div><label>Source URL</label><input type="text" data-lf="source" value="${escapeAttr(p.source)}" placeholder="https://…">
+          ${p.companyText && p.companyText.toLowerCase()!==c.name.toLowerCase() ? `<div class="li-hint">LinkedIn lists: ${escapeHtml(p.companyText)}</div>` : ''}
+        </div>
+        <div><label>Category</label>
+          <select data-lf="category">
+            <option value="sustainabilityLeads" ${p.category==='sustainabilityLeads'?'selected':''}>Sustainability</option>
+            <option value="procurementLeads" ${p.category==='procurementLeads'?'selected':''}>Procurement</option>
+          </select>
+        </div>
+        <div><label>Access</label>
+          <select data-lf="status">
+            <option value="verified" ${p.status!=='restricted'?'selected':''}>Public</option>
+            <option value="restricted" ${p.status==='restricted'?'selected':''}>Restricted</option>
+          </select>
+        </div>
+      </div>
+    `).join('');
+    return `
+      ${warning}
+      ${rows}
+      <div class="btn-row" style="margin:8px 0 20px;">
+        <button class="action small" data-li-commit="${c.id}">Add checked contacts</button>
+        <button class="action ghost small" data-li-discard="${c.id}">Discard preview</button>
+      </div>
+    `;
+  }
+
+  function notAccessibleHtml(c){
+    if(c.notAccessible.length===0) return '<p class="empty">None logged.</p>';
+    return c.notAccessible.map((n,i)=>`
+      <div class="lead-row" style="grid-template-columns:1fr auto;">
+        <div>${escapeHtml(n)}</div>
+        <button class="action danger small icon" data-del-na="${c.id}|${i}" aria-label="Delete not-accessible entry">✕</button>
+      </div>
+    `).join('');
+  }
+
+  function attachResearchHandlers(){
+    document.querySelectorAll('[data-add-form]').forEach(row=>{
+      wireSmartPaste(row.querySelector('[data-f="name"]'), row.querySelector('[data-f="title"]'));
+    });
+    document.querySelectorAll('.lead-row').forEach(row=>{
+      const nameInp = row.querySelector('[data-ef="name"]');
+      const titleInp = row.querySelector('[data-ef="title"]');
+      if(nameInp && titleInp) wireSmartPaste(nameInp, titleInp);
+    });
+
+    document.querySelectorAll('[data-toggle]').forEach(h=>{
+      const toggle = ()=>{
+        const c = findCompany(h.dataset.toggle);
+        c.open = !c.open;
+        renderResearch();
+      };
+      h.addEventListener('click', toggle);
+      h.addEventListener('keydown', e=>{
+        if(e.key==='Enter' || e.key===' '){ e.preventDefault(); toggle(); }
+      });
+    });
+
+    document.querySelectorAll('[data-mark-status]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const c = findCompany(btn.dataset.markStatus);
+        if(!c) return;
+        c.status = btn.dataset.target;
+        renderResearch(); updateStats();
+        announce(c.status==='complete' ? `${c.name} marked complete.` : `${c.name} reopened as pending.`);
+      });
+    });
+
+    function submitLead(cid, field, row){
+      const get = f => row.querySelector(`[data-f="${f}"]`).value.trim();
+      const nameInput = row.querySelector('[data-f="name"]');
+      const titleInput = row.querySelector('[data-f="title"]');
+      const name = get('name'), title = get('title');
+      let ok = true;
+      [ [nameInput,name], [titleInput,title] ].forEach(([inp,val])=>{
+        if(!val){ inp.classList.add('invalid'); ok = false; } else { inp.classList.remove('invalid'); }
+      });
+      if(!ok){ announce('Name and title are required to add a lead.', true); return; }
+      const c = findCompany(cid);
+      if(!c) return;
+      c[field].push(normalizeLead({ name, title, source: get('source'), date: get('date'), status: get('status') }));
+      renderResearch(); updateStats();
+      announce(`Added ${name} (${title}).`);
+    }
+
+    document.querySelectorAll('[data-add-lead]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const [cid, field] = btn.dataset.addLead.split('|');
+        submitLead(cid, field, btn.closest('[data-add-form]'));
+      });
+    });
+    document.querySelectorAll('[data-add-form] input[type=text]').forEach(inp=>{
+      inp.addEventListener('keydown', e=>{
+        if(e.key==='Enter'){
+          e.preventDefault();
+          const row = inp.closest('[data-add-form]');
+          const [cid, field] = row.dataset.addForm.split('|');
+          submitLead(cid, field, row);
+        }
+      });
+    });
+
+    document.querySelectorAll('[data-edit-lead]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const [cid, field, idx] = btn.dataset.editLead.split('|');
+        const c = findCompany(cid);
+        if(c && c[field][idx]) c[field][idx].editing = true;
+        renderResearch();
+      });
+    });
+    document.querySelectorAll('[data-cancel-lead]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const [cid, field, idx] = btn.dataset.cancelLead.split('|');
+        const c = findCompany(cid);
+        if(c && c[field][idx]) c[field][idx].editing = false;
+        renderResearch();
+      });
+    });
+    document.querySelectorAll('[data-save-lead]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const [cid, field, idx] = btn.dataset.saveLead.split('|');
+        const c = findCompany(cid);
+        if(!c || !c[field][idx]) return;
+        const row = btn.closest('.lead-row');
+        const get = f => row.querySelector(`[data-ef="${f}"]`).value.trim();
+        const name = get('name'), title = get('title');
+        if(!name || !title){ announce('Name and title are required.', true); return; }
+        c[field][idx] = normalizeLead({ name, title, source: get('source'), date: get('date'), status: get('status') });
+        renderResearch(); updateStats();
+        announce('Lead updated.');
+      });
+    });
+    document.querySelectorAll('[data-del-lead]').forEach(btn=>{
+      btn.addEventListener('click', async ()=>{
+        const [cid, field, idx] = btn.dataset.delLead.split('|');
+        const c = findCompany(cid);
+        if(!c) return;
+        const rec = c[field][idx];
+        const ok = await showConfirm(`Delete lead "${rec ? rec.name : ''}"?`);
+        if(!ok) return;
+        c[field].splice(idx,1);
+        renderResearch(); updateStats();
+      });
+    });
+
+    function submitNA(cid){
+      const input = document.querySelector(`[data-na-input="${cid}"]`);
+      const val = input.value.trim();
+      if(!val){ input.classList.add('invalid'); return; }
+      const c = findCompany(cid);
+      if(!c) return;
+      c.notAccessible.push(val.slice(0,300));
+      renderResearch(); updateStats();
+    }
+    document.querySelectorAll('[data-add-na]').forEach(btn=>{
+      btn.addEventListener('click', ()=> submitNA(btn.dataset.addNa));
+    });
+    document.querySelectorAll('[data-na-input]').forEach(inp=>{
+      inp.addEventListener('keydown', e=>{
+        if(e.key==='Enter'){ e.preventDefault(); submitNA(inp.dataset.naInput); }
+      });
+      inp.addEventListener('input', ()=> inp.classList.remove('invalid'));
+    });
+    document.querySelectorAll('[data-del-na]').forEach(btn=>{
+      btn.addEventListener('click', async ()=>{
+        const [cid, idx] = btn.dataset.delNa.split('|');
+        const c = findCompany(cid);
+        if(!c) return;
+        const ok = await showConfirm('Delete this not-accessible entry?');
+        if(!ok) return;
+        c.notAccessible.splice(idx,1);
+        renderResearch(); updateStats();
+      });
+    });
+
+    document.querySelectorAll('[data-li-parse]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const cid = btn.dataset.liParse;
+        const c = findCompany(cid);
+        if(!c) return;
+        const ta = document.querySelector(`[data-li-input="${cid}"]`);
+        const text = ta.value;
+        if(!text.trim()){ announce('Paste some LinkedIn contact data first.', true); return; }
+        if(text.length > MAX_PASTE_CHARS){ announce('That pasted data is very large — try a smaller batch.', true); return; }
+        let contacts;
+        try{
+          contacts = parseLinkedInPaste(text);
+        }catch(err){
+          announce('Could not parse that paste — try one contact per line as "Name, Title".', true);
+          return;
+        }
+        c._liPreview = contacts.map(ct => ({
+          name: ct.name, title: ct.title, source: ct.source, companyText: ct.companyText || '',
+          category: guessLeadCategory(ct.title), status: 'verified', include: true
+        }));
+        renderResearch();
+        announce(contacts.length ? `Parsed ${contacts.length} contact${contacts.length===1?'':'s'} — review below before adding.` : 'No contacts recognised in that paste.', contacts.length===0);
+      });
+    });
+
+    document.querySelectorAll('[data-li-discard]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const c = findCompany(btn.dataset.liDiscard);
+        if(!c) return;
+        c._liPreview = null;
+        renderResearch();
+      });
+    });
+
+    document.querySelectorAll('[data-li-commit]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const cid = btn.dataset.liCommit;
+        const c = findCompany(cid);
+        if(!c || !c._liPreview) return;
+        const rowEls = document.querySelectorAll(`[data-li-row^="${cid}|"]`);
+        let added = 0, dupSkipped = 0, missing = 0;
+        const byCategory = { sustainabilityLeads:0, procurementLeads:0 };
+        rowEls.forEach(rowEl=>{
+          const include = rowEl.querySelector('[data-lf="include"]').checked;
+          if(!include) return;
+          const get = f => rowEl.querySelector(`[data-lf="${f}"]`).value.trim();
+          const name = get('name'), title = get('title');
+          if(!name && !title){ missing++; return; }
+          const category = get('category') === 'procurementLeads' ? 'procurementLeads' : 'sustainabilityLeads';
+          const source = get('source');
+          const status = get('status') === 'restricted' ? 'restricted' : 'verified';
+          const dupExists = c[category].some(l =>
+            l.name.toLowerCase() === name.toLowerCase() && l.title.toLowerCase() === title.toLowerCase());
+          if(dupExists){ dupSkipped++; return; }
+          c[category].push(normalizeLead({ name, title, source, date:'', status }));
+          byCategory[category]++;
+          added++;
+        });
+        c._liPreview = null;
+        const ta = document.querySelector(`[data-li-input="${cid}"]`);
+        if(ta) ta.value = '';
+        renderResearch(); updateStats();
+        const parts = [];
+        if(byCategory.sustainabilityLeads) parts.push(`${byCategory.sustainabilityLeads} to Sustainability`);
+        if(byCategory.procurementLeads) parts.push(`${byCategory.procurementLeads} to Procurement`);
+        let msg = added ? `Added ${added} contact${added===1?'':'s'} (${parts.join(', ')}).` : 'No contacts were checked.';
+        if(dupSkipped) msg += ` Skipped ${dupSkipped} already recorded.`;
+        if(missing) msg += ` Skipped ${missing} with no name or title.`;
+        announce(msg, added===0);
+      });
+    });
+
+    document.querySelectorAll('[data-fetch-links]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const c = findCompany(btn.dataset.fetchLinks);
+        if(!c) return;
+        const links = buildResearchLinks(c);
+        if(links.length === 0){ announce('No research links available for this company.', true); return; }
+        const result = openLinksWithDetection(links);
+        c.lastFetched = new Date().toISOString();
+        c._blockedLinks = result.blocked.length ? result.blocked : null;
+        renderResearch(); updateStats();
+        if(result.blocked.length === 0){
+          announce(`Opened ${result.opened} research link${result.opened===1?'':'s'} for ${c.name}.`);
+        } else {
+          announce(`Opened ${result.opened} of ${result.total} links for ${c.name}. ${result.blocked.length} blocked by your browser's pop-up blocker — click them individually below.`, true);
+        }
+      });
+    });
+    document.querySelectorAll('[data-dismiss-blocked]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const c = findCompany(btn.dataset.dismissBlocked);
+        if(c) c._blockedLinks = null;
+        renderResearch();
+      });
+    });
+
+    document.querySelectorAll('[data-copy-name]').forEach(btn=>{
+      btn.addEventListener('click', async ()=>{
+        const cid = btn.dataset.copyName;
+        const c = findCompany(cid);
+        if(!c) return;
+        const ok = await copyText(c.name);
+        announce(ok ? `Copied "${c.name}" — paste it into the payment practices search box.` : 'Could not copy automatically — select the name above and copy manually.', !ok);
+      });
+    });
+  }
+
+  // ---------- Export ----------
+  function timestamp(){
+    return new Date().toISOString().slice(0,10);
+  }
+
+  document.getElementById('genExportBtn').addEventListener('click', ()=>{
+    if(companies.length===0){
+      document.getElementById('exportOut').textContent = 'Add at least one company first.';
+      return;
+    }
+    const blocks = companies.map(companyExportBlock);
+    document.getElementById('exportOut').textContent = blocks.join('\n\n');
+    announce('Export generated.');
+  });
+
+  function companyExportBlock(c){
+    const line = '━'.repeat(52);
+    const today = new Date().toLocaleDateString('en-GB', { day:'2-digit', month:'long', year:'numeric' });
+    const leadBlock = (rows) => rows.length ? rows.map(r=>
+`• Name: ${r.name}
+  Role: ${r.title}
+  Source: ${r.source || 'NOT PROVIDED'}
+  Access: ${r.status===STATUS.VERIFIED ? '✅ Publicly accessible – no login required' : '⚠️ Restricted — review before use'}
+  Accessed: ${r.date || 'Not recorded'}
+  Compliance: Public data — GDPR/PECR compliant; lawful basis: Legitimate Interest (Art 6(1)(f))`
+    ).join('\n\n') : '(none recorded)';
+
+    const naBlock = c.notAccessible.length
+      ? c.notAccessible.map(n=>`• ${n}: NOT ACCESSIBLE — restricted or requires login`).join('\n')
+      : '(none logged)';
+
+    return `${line}
+COMPANY: ${c.name}
+SECTOR: ${c.sector || 'Not set'}
+WATER RELEVANCE: ${c.water || 'Not set'}
+RESEARCH STATUS: ${c.status === 'complete' ? 'Complete' : 'Pending'}
+${c.lastFetched ? `LINKS LAST OPENED: ${formatDateTime(c.lastFetched)}\n` : ''}EXPORTED: ${today}
+
+─── SUSTAINABILITY / ESG LEADS ───
+${leadBlock(c.sustainabilityLeads)}
+
+─── PROCUREMENT / SUPPLY CHAIN LEADS ───
+${leadBlock(c.procurementLeads)}
+
+─── NOT ACCESSIBLE ───
+${naBlock}
+${line}`;
+  }
+
+  async function copyText(text){
+    if(navigator.clipboard && window.isSecureContext){
+      try{ await navigator.clipboard.writeText(text); return true; }catch(e){ /* fall through */ }
+    }
+    try{
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly','');
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.focus(); ta.select();
+      const ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    }catch(e){ return false; }
+  }
+
+  document.getElementById('copyExportBtn').addEventListener('click', async ()=>{
+    const text = document.getElementById('exportOut').textContent;
+    if(!text || text.startsWith('No records have been generated') || text.startsWith('Add at least')){
+      announce('Generate the export first.', true); return;
+    }
+    const ok = await copyText(text);
+    announce(ok ? 'Copied to clipboard.' : 'Could not copy automatically — select the text above and copy manually.', !ok);
+  });
+
+  function triggerDownload(filename, mime, content){
+    try{
+      const blob = new Blob([content], {type:mime});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(()=>URL.revokeObjectURL(url), 2000);
+      return true;
+    }catch(e){
+      return false;
+    }
+  }
+
+  document.getElementById('downloadExportBtn').addEventListener('click', async ()=>{
+    const text = document.getElementById('exportOut').textContent;
+    if(!text || text.startsWith('No records have been generated') || text.startsWith('Add at least')){
+      announce('Generate the export first.', true); return;
+    }
+    const result = await saveFile(`decision-maker-ledger-${timestamp()}.txt`, 'text/plain', text);
+    if(result.ok) announce('Download started.');
+    else if(result.declined) announce('Download cancelled.');
+    else announce('Download failed in this browser or view.', true);
+  });
+
+  document.getElementById('downloadCsvBtn').addEventListener('click', async ()=>{
+    if(companies.length===0){ announce('Add at least one company first.', true); return; }
+    const header = ['Company','Sector','Category','Name','Title','Source','Accessed','Access status'];
+    const rows = [header];
+    companies.forEach(c=>{
+      const push = (cat, leads) => leads.forEach(l=>{
+        rows.push([c.name, c.sector, cat, l.name, l.title, l.source, l.date, l.status===STATUS.RESTRICTED?'Restricted':'Public']);
+      });
+      push('Sustainability / ESG', c.sustainabilityLeads);
+      push('Procurement / Supply chain', c.procurementLeads);
+      c.notAccessible.forEach(n=>{
+        rows.push([c.name, c.sector, 'Not accessible', '', n, '', '', 'Not accessible']);
+      });
+    });
+    const csv = rows.map(r=>r.map(csvField).join(',')).join('\r\n');
+    const result = await saveFile(`decision-maker-ledger-${timestamp()}.csv`, 'text/csv', csv);
+    if(result.ok) announce('CSV download started.');
+    else if(result.declined) announce('Download cancelled.');
+    else announce('Download failed in this browser or view.', true);
+  });
+
+  document.getElementById('printExportBtn').addEventListener('click', ()=>{
+    const text = document.getElementById('exportOut').textContent;
+    if(!text || text.startsWith('No records have been generated') || text.startsWith('Add at least')){
+      announce('Generate the export first.', true); return;
+    }
+    try{ window.print(); }
+    catch(e){ announce('Printing is not available in this view — use Download .txt instead.', true); }
+  });
+
+  // ---------- JSON persistence (manual, no browser storage) ----------
+  document.getElementById('exportJsonBtn').addEventListener('click', ()=>{
+    const clean = companies.map(c=>{
+      const cc = Object.assign({}, c);
+      delete cc.editingDetails;
+      delete cc._liPreview;
+      delete cc._blockedLinks;
+      cc.sustainabilityLeads = cc.sustainabilityLeads.map(l=>{ const ll=Object.assign({},l); delete ll.editing; return ll; });
+      cc.procurementLeads = cc.procurementLeads.map(l=>{ const ll=Object.assign({},l); delete ll.editing; return ll; });
+      return cc;
+    });
+    document.getElementById('jsonIO').value = JSON.stringify(clean, null, 2);
+    announce('JSON exported below — copy it somewhere safe.');
+  });
+
+  document.getElementById('loadJsonBtn').addEventListener('click', async ()=>{
+    const raw = document.getElementById('jsonIO').value;
+    if(!raw.trim()){ announce('Paste ledger JSON into the box first.', true); return; }
+    let parsed;
+    try{ parsed = JSON.parse(raw); }
+    catch(e){ announce('Could not parse that JSON — check it was copied in full.', true); return; }
+    if(!Array.isArray(parsed)){ announce('That JSON is not a ledger export (expected a list of companies).', true); return; }
+    if(companies.length > 0){
+      const ok = await showConfirm('Loading will replace everything currently in this ledger. Continue?');
+      if(!ok) return;
+    }
+    try{
+      idCounter = 1;
+      companies = parsed.map(normalizeCompany);
+      idCounter = Math.max(0, ...companies.map(c=>c.id||0)) + 1;
+      renderAll();
+      announce(`Loaded ${companies.length} compan${companies.length===1?'y':'ies'}.`);
+    }catch(e){
+      announce('That JSON loaded partially or not at all — check its structure.', true);
+    }
+  });
+
+  document.getElementById('clearAllBtn').addEventListener('click', async ()=>{
+    if(companies.length===0){ announce('There is nothing to clear.'); return; }
+    const ok = await showConfirm('Clear every company and lead from this session? This cannot be undone.');
+    if(!ok) return;
+    companies = [];
+    idCounter = 1;
+    document.getElementById('exportOut').textContent = 'No records have been generated yet. Add a company and click "Generate" to create your first structured record.';
+    renderAll();
+    announce('Ledger cleared.');
+  });
+
+  // ---------- Init ----------
+  renderAll();
+})();
+</script>
+</body>
+</html>
